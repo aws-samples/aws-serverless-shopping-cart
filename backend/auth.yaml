@@ -17,8 +17,6 @@ Resources:
       AdminCreateUserConfig:
         AllowAdminCreateUserOnly: true
       UserPoolName: !Sub ${AWS::StackName}-UserPool
-      UsernameAttributes:
-        - email
 
   UserPoolClient:
     Type: AWS::Cognito::UserPoolClient

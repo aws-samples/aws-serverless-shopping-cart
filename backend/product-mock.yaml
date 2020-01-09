@@ -1,0 +1,63 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  product-service
+
+  SAM Template for mock product-service
+
+Globals:
+  Function:
+    Timeout: 5
+    Tracing: Active
+    AutoPublishAlias: live
+    Environment:
+      Variables:
+        LOG_LEVEL: "DEBUG"
+  Api:
+    EndpointConfiguration: REGIONAL
+    Cors:
+      AllowMethods: "'OPTIONS,POST,GET'"
+      AllowHeaders: "'Content-Type'"
+      AllowOrigin: "'http://localhost:8080'"
+
+Resources:
+  GetProductFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: product-mock-service/
+      Handler: get_product.lambda_handler
+      Runtime: python3.8
+      MemorySize: 256
+      Events:
+        ListCart:
+          Type: Api
+          Properties:
+            Path: /product/{product_id}
+            Method: get
+
+  GetProductsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: product-mock-service/
+      Handler: get_products.lambda_handler
+      Runtime: python3.7
+      MemorySize: 256
+      Events:
+        ListCart:
+          Type: Api
+          Properties:
+            Path: /product
+            Method: get
+
+  GetProductApiUrl:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Name: /serverless-shopping-cart-demo/products/get-product-url
+      Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+
+
+Outputs:
+  ProductApi:
+    Description: "API Gateway endpoint URL for Prod stage for Product Mock Service"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"

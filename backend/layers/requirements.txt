@@ -1,0 +1,4 @@
+boto3==1.10.34
+aws-xray-sdk==2.4.3
+requests==2.22.0
+cognitojwt==1.1.0

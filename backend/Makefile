@@ -1,4 +1,4 @@
-all: build_layers build deploy
+all: build deploy
 
 nolayers: build deploy
 
@@ -18,6 +18,7 @@ tests:
 
 delete:
 	aws cloudformation delete-stack --stack-name $(STACKNAME)
+	@echo "Waiting for stack $(STACKNAME) to be deleted..."
 	@aws cloudformation wait stack-delete-complete --stack-name $(STACKNAME)
 
 .PHONY: build build_layers package deploy nolayers delete

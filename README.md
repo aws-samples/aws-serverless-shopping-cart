@@ -42,14 +42,21 @@ AWS Account
 
 Clone the project: `git clone <repo-url> && cd <repo-dir>`
 
-Build and deploy the resources:
+Build and deploy the resources, making note of the output variables:
 ``` bash
 cd backend
 export S3_BUCKET=your-s3-bucket-name
-make TEMPLATE=auth  # Deploy the authentication infrastructure. Make a note of the outputs "CognitoUserPoolId" and "CognitoAppClientId".
-make TEMPLATE=product-mock  # Deploy the product mock service. Make a note of the output url "ProductApi".
-make TEMPLATE=shoppingcart-service  # Package and deploy the SAM template for the shopping-cart service. Make a note of the output url "CartApi". 
+make TEMPLATE=auth  # Deploys the authentication infrastructure. Make a note of the outputs "CognitoUserPoolId" and "CognitoAppClientId".
+make TEMPLATE=product-mock  # Deploys the product mock service. Make a note of the output url "ProductApi".
+make build_layers  # Locally builds python lambda layers required for deploying shoppingcart-service
+make TEMPLATE=shoppingcart-service  # Deploys the SAM template for the shopping-cart service. Make a note of the output url "CartApi". 
 
+```
+
+Create a user you can use to log in with. Replace CognitoUserPoolId with the value you noted down in previous step. 
+Feel free to change the username or temporary password (this will be used for the first login before prompting you to change it):  
+```bash
+aws cognito-idp admin-create-user --username testuser1 --temporary-password Testuser1! --user-pool-id CognitoUserPoolId 
 ```
 
 ### Run the Frontend Locally
@@ -70,7 +77,8 @@ cd frontend
 yarn install
 yarn serve
 ```
-Be sure to access on http://localhost:8080/ in your browser. Using a different port, or using the ip address will cause errors due to the backend's CORS configuration.
+Access on http://localhost:8080/ (not http://127.0.0.1:8080/) in your browser. Using a different port, or using the 
+ip address will cause errors due to the backend's CORS configuration.
 
 ## SAM Template Resources
 

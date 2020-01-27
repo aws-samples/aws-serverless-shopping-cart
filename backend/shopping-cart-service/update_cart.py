@@ -1,12 +1,11 @@
 import json
 import logging
 import os
-from decimal import Decimal
 
 import boto3
-import requests
-from aws_xray_sdk.core import patch, xray_recorder
+from aws_xray_sdk.core import patch
 from shared import get_headers, generate_ttl, get_user_sub, get_cart_id, NotFoundException
+from utils import get_product_from_external_service
 
 libraries = ('boto3', 'requests')
 patch(libraries)
@@ -17,21 +16,6 @@ logger.setLevel(os.environ['LOG_LEVEL'])
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table(os.environ['TABLE_NAME'])
 product_service_url = os.environ['PRODUCT_SERVICE_URL']
-
-
-# TODO: move to shared layer
-@xray_recorder.capture('get_product_from_external_api')
-def get_product_from_external_service(product_id):
-    """
-    Call product API to retrieve product details
-    """
-    response = requests.get(product_service_url + f'/product/{product_id}')
-    try:
-        response_dict = response.json()['product']
-    except KeyError:
-        raise NotFoundException
-
-    return response_dict
 
 
 def lambda_handler(event, context):

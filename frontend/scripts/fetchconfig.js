@@ -37,21 +37,12 @@ params
         var fileName = "./.env." + envtype
         fs.writeFile(fileName, output.join('\n'), function (err) {
             if (err) {
-                return console.log(err);
+                return console.log(err);  // eslint-disable-line no-console
             }
-            console.log(`env file ${fileName} populated with config`);
+            console.log(`env file ${fileName} populated with config`);  // eslint-disable-line no-console
         });
 
     })
     .catch(error => {
-        console.log('error: ' + error)
+        console.log('error: ' + error)  // eslint-disable-line no-console
     })
-
-
-/*
-VUE_APP_CART_API_URL=CartApiUrl
-VUE_APP_PRODUCTS_API_URL=ProductApiUrl
-VUE_APP_AWS_REGION=your-aws-region
-VUE_APP_AWS_COGNITO_USER_POOL_ID=CognitoUserPoolId
-VUE_APP_AWS_COGNITO_CLIENT_ID=CognitoAppClientId
-*/

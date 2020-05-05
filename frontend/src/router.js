@@ -3,6 +3,7 @@ import Vue from 'vue';
 import store from '@/store/store.js'
 import Home from '@/views/Home.vue'
 import Payment from '@/views/Payment.vue'
+import Auth from '@/views/Auth.vue'
 import {
   components,
   AmplifyEventBus
@@ -63,7 +64,7 @@ const routes = [{
   {
     path: '/auth',
     name: 'Authenticator',
-    component: components.Authenticator
+    component: Auth
   }, {
     path: '/checkout',
     component: Payment,

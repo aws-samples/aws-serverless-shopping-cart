@@ -11,7 +11,7 @@ build_layers:
 	$(MAKE) -C ./layers
 
 deploy:  # s3 bucket still needed for layer
-	sam deploy --capabilities CAPABILITY_NAMED_IAM --stack-name $(STACKNAME) --s3-bucket $(S3_BUCKET)
+	sam deploy --capabilities CAPABILITY_NAMED_IAM --stack-name $(STACKNAME) --s3-bucket $(S3_BUCKET) || true
 
 tests:
 	py.test -v

@@ -5,23 +5,6 @@ Description: >
 
   SAM Template for shoppingcart-service
 
-Globals:
-  Function:
-    Timeout: 5
-    MemorySize: 512
-    Tracing: Active
-    Environment:
-      Variables:
-        TABLE_NAME: !Ref DynamoDBShoppingCartTable
-        LOG_LEVEL: "DEBUG"
-  Api:
-    EndpointConfiguration: REGIONAL
-    Cors:
-      AllowMethods: "'OPTIONS,POST,GET,PUT'"
-      AllowHeaders: "'Content-Type,Authorization'"
-      AllowCredentials: true
-      AllowOrigin: !Sub "'http://localhost:8080'"
-
 Parameters:
   UserPoolArn:
     Type: 'AWS::SSM::Parameter::Value<String>'
@@ -31,8 +14,28 @@ Parameters:
     Default: '/serverless-shopping-cart-demo/auth/user-pool-id'
   ProductServiceUrl:
     Type: 'AWS::SSM::Parameter::Value<String>'
-    Default: '/serverless-shopping-cart-demo/products/get-product-url'
+    Default: '/serverless-shopping-cart-demo/products/products-api-url'
+  AllowedOrigin:
+    Type: 'String'
+    Default: 'http://localhost:8080'
 
+Globals:
+  Function:
+    Timeout: 5
+    MemorySize: 512
+    Tracing: Active
+    Environment:
+      Variables:
+        TABLE_NAME: !Ref DynamoDBShoppingCartTable
+        LOG_LEVEL: "DEBUG"
+        ALLOWED_ORIGIN: !Ref AllowedOrigin
+  Api:
+    EndpointConfiguration: REGIONAL
+    Cors:
+      AllowMethods: "'OPTIONS,POST,GET,PUT'"
+      AllowHeaders: "'Content-Type,Authorization'"
+      AllowCredentials: true
+      AllowOrigin: !Sub "'${AllowedOrigin}'"
 
 Resources:
   UtilsLayer:
@@ -390,6 +393,13 @@ Resources:
         maxReceiveCount: 5
   CartDeleteSQSDLQ:
     Type: AWS::SQS::Queue
+
+  CartApiUrl:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Name: /serverless-shopping-cart-demo/shopping-cart/cart-api-url
+      Value: !Sub "https://${CartApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
 
 Outputs:
   CartApi:

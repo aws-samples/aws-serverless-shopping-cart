@@ -7,7 +7,7 @@ from mock_product_list import PRODUCT_LIST
 logger = logging.getLogger()
 logger.setLevel(os.environ['LOG_LEVEL'])
 
-HEADERS = {'Access-Control-Allow-Origin': 'http://localhost:8080',
+HEADERS = {'Access-Control-Allow-Origin': os.environ.get('ALLOWED_ORIGIN'),
            "Access-Control-Allow-Headers": "Content-Type",
            "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
            }

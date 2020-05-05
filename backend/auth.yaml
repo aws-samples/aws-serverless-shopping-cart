@@ -14,10 +14,9 @@ Resources:
   CognitoUserPool:
     Type: AWS::Cognito::UserPool
     Properties:
-      AdminCreateUserConfig:
-        AllowAdminCreateUserOnly: true
       UserPoolName: !Sub ${AWS::StackName}-UserPool
-
+      AutoVerifiedAttributes: 
+        - email
   UserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:
@@ -40,6 +39,13 @@ Resources:
       Type: String
       Name: /serverless-shopping-cart-demo/auth/user-pool-arn
       Value: !GetAtt CognitoUserPool.Arn
+
+  UserPoolAppClientSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Name: /serverless-shopping-cart-demo/auth/user-pool-client-id
+      Value: !Ref UserPoolClient
 
 Outputs:
   CognitoUserPoolId:

@@ -4,7 +4,10 @@ Description: >
   product-service
 
   SAM Template for mock product-service
-
+Parameters:
+  AllowedOrigin:
+    Type: 'String'
+    Default: 'http://localhost:8080'
 Globals:
   Function:
     Timeout: 5
@@ -13,12 +16,14 @@ Globals:
     Environment:
       Variables:
         LOG_LEVEL: "DEBUG"
+        ALLOWED_ORIGIN: !Ref AllowedOrigin
+
   Api:
     EndpointConfiguration: REGIONAL
     Cors:
       AllowMethods: "'OPTIONS,POST,GET'"
       AllowHeaders: "'Content-Type'"
-      AllowOrigin: "'http://localhost:8080'"
+      AllowOrigin: !Sub "'${AllowedOrigin}'"
 
 Resources:
   GetProductFunction:
@@ -53,7 +58,7 @@ Resources:
     Type: AWS::SSM::Parameter
     Properties:
       Type: String
-      Name: /serverless-shopping-cart-demo/products/get-product-url
+      Name: /serverless-shopping-cart-demo/products/products-api-url
       Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
 
 

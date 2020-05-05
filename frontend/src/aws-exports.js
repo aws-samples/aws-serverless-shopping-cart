@@ -1,14 +1,8 @@
 const awsmobile = {
   Auth: {
-    region: process.env.VUE_AWS_REGION,
-    userPoolId: process.env.VUE_APP_AWS_COGNITO_USER_POOL_ID,
-    userPoolWebClientId: process.env.VUE_APP_AWS_COGNITO_CLIENT_ID,
-    cookieStorage: {
-      domain: 'localhost',
-      secure: false,
-      path: '/',
-      expires: 1
-    }
+    region: process.env.VUE_APP_AWS_REGION,
+    userPoolId: process.env.VUE_APP_USER_POOL_ID,
+    userPoolWebClientId: process.env.VUE_APP_USER_POOL_CLIENT_ID
   },
   API: {
     endpoints: [{
@@ -18,7 +12,6 @@ const awsmobile = {
       {
         name: "ProductAPI",
         endpoint: process.env.VUE_APP_PRODUCTS_API_URL,
-
       }
     ]
   }

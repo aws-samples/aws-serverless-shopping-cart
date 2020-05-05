@@ -7,18 +7,18 @@ from http.cookies import SimpleCookie
 
 import cognitojwt
 
-HEADERS = {'Access-Control-Allow-Origin': os.environ.get('ALLOWED_ORIGIN'),
-           "Access-Control-Allow-Headers": "Content-Type",
-           "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
-           'Access-Control-Allow-Credentials': True
-           }
+HEADERS = {
+    "Access-Control-Allow-Origin": os.environ.get("ALLOWED_ORIGIN"),
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+    "Access-Control-Allow-Credentials": True,
+}
 
 
 class NotFoundException(Exception):
     pass
 
 
-# TODO: Probably don't need this method any more
 def handle_decimal_type(obj):
     """
     json serializer which works with Decimal types returned from DynamoDB.
@@ -44,11 +44,13 @@ def get_user_sub(jwt_token):
     Validate JWT claims & retrieve user identifier
     """
     try:
-        verified_claims = cognitojwt.decode(jwt_token, os.environ['AWS_REGION'], os.environ['USERPOOL_ID'])
-    except (cognitojwt.CognitoJWTException, ValueError) as e:
+        verified_claims = cognitojwt.decode(
+            jwt_token, os.environ["AWS_REGION"], os.environ["USERPOOL_ID"]
+        )
+    except (cognitojwt.CognitoJWTException, ValueError):
         verified_claims = {}
 
-    return verified_claims.get('sub')
+    return verified_claims.get("sub")
 
 
 def get_cart_id(event_headers):
@@ -57,8 +59,8 @@ def get_cart_id(event_headers):
     """
     cookie = SimpleCookie()
     try:
-        cookie.load(event_headers['cookie'])
-        cart_cookie = cookie['cartId'].value
+        cookie.load(event_headers["cookie"])
+        cart_cookie = cookie["cartId"].value
         generated = False
     except KeyError:
         cart_cookie = str(uuid.uuid4())
@@ -73,11 +75,11 @@ def get_headers(cart_id):
     """
     headers = HEADERS
     cookie = SimpleCookie()
-    cookie['cartId'] = cart_id
-    cookie['cartId']['max-age'] = (60 * 60) * 24  # 1 day
-    cookie['cartId']['secure'] = True
-    cookie['cartId']['httponly'] = True
-    cookie['cartId']['samesite'] = "None"
-    cookie['cartId']['path'] = "/"
-    headers['Set-Cookie'] = cookie['cartId'].OutputString()
+    cookie["cartId"] = cart_id
+    cookie["cartId"]["max-age"] = (60 * 60) * 24  # 1 day
+    cookie["cartId"]["secure"] = True
+    cookie["cartId"]["httponly"] = True
+    cookie["cartId"]["samesite"] = "None"
+    cookie["cartId"]["path"] = "/"
+    headers["Set-Cookie"] = cookie["cartId"].OutputString()
     return headers

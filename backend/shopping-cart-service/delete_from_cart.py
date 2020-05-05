@@ -5,14 +5,14 @@ import os
 import boto3
 from aws_xray_sdk.core import patch
 
-libraries = ('boto3',)
+libraries = ("boto3",)
 patch(libraries)
 
 logger = logging.getLogger()
-logger.setLevel(os.environ['LOG_LEVEL'])
+logger.setLevel(os.environ["LOG_LEVEL"])
 
-dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table(os.environ['TABLE_NAME'])
+dynamodb = boto3.resource("dynamodb")
+table = dynamodb.Table(os.environ["TABLE_NAME"])
 
 
 def lambda_handler(event, context):
@@ -21,12 +21,12 @@ def lambda_handler(event, context):
     """
     logger.debug(event)
 
-    records = event['Records']
+    records = event["Records"]
 
     with table.batch_writer() as batch:
         for item in records:
-            item_body = json.loads(item['body'])
-            batch.delete_item(Key={'pk': item_body['pk'], 'sk': item_body['sk']})
+            item_body = json.loads(item["body"])
+            batch.delete_item(Key={"pk": item_body["pk"], "sk": item_body["sk"]})
 
     return {
         "statusCode": 200,

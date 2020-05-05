@@ -4,18 +4,24 @@ import os
 
 import boto3
 from aws_xray_sdk.core import patch
-from shared import get_headers, generate_ttl, get_user_sub, get_cart_id, NotFoundException
+from shared import (
+    get_headers,
+    generate_ttl,
+    get_user_sub,
+    get_cart_id,
+    NotFoundException,
+)
 from utils import get_product_from_external_service
 
-libraries = ('boto3', 'requests')
+libraries = ("boto3", "requests")
 patch(libraries)
 
 logger = logging.getLogger()
-logger.setLevel(os.environ['LOG_LEVEL'])
+logger.setLevel(os.environ["LOG_LEVEL"])
 
-dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table(os.environ['TABLE_NAME'])
-product_service_url = os.environ['PRODUCT_SERVICE_URL']
+dynamodb = boto3.resource("dynamodb")
+table = dynamodb.Table(os.environ["TABLE_NAME"])
+product_service_url = os.environ["PRODUCT_SERVICE_URL"]
 
 
 def lambda_handler(event, context):
@@ -26,25 +32,23 @@ def lambda_handler(event, context):
     logger.debug(event)
 
     try:
-        request_payload = json.loads(event['body'])
+        request_payload = json.loads(event["body"])
     except KeyError:
         return {
             "statusCode": 400,
             "headers": get_headers(),
-            "body": json.dumps({
-                "message": "No Request payload"
-            })
+            "body": json.dumps({"message": "No Request payload"}),
         }
 
     # retrieve the product_id that was specified in the url
-    product_id = event['pathParameters']['product_id']
+    product_id = event["pathParameters"]["product_id"]
 
-    quantity = int(request_payload['quantity'])
-    cart_id, _ = get_cart_id(event['headers'])
+    quantity = int(request_payload["quantity"])
+    cart_id, _ = get_cart_id(event["headers"])
 
     # Because this method can be called anonymously, we need to check if there's a logged in user
     user_sub = None
-    jwt_token = event['headers'].get('Authorization')
+    jwt_token = event["headers"].get("Authorization")
     if jwt_token:
         user_sub = get_user_sub(jwt_token)
 
@@ -54,9 +58,7 @@ def lambda_handler(event, context):
         return {
             "statusCode": 404,
             "headers": get_headers(cart_id=cart_id),
-            "body": json.dumps({
-                "message": "product not found",
-            }),
+            "body": json.dumps({"message": "product not found"}),
         }
 
     # Prevent storing negative quantities of things
@@ -64,36 +66,38 @@ def lambda_handler(event, context):
         return {
             "statusCode": 400,
             "headers": get_headers(cart_id),
-            "body": json.dumps({
-                "productId": product_id,
-                "message": "Quantity must not be lower than 0",
-            }),
+            "body": json.dumps(
+                {
+                    "productId": product_id,
+                    "message": "Quantity must not be lower than 0",
+                }
+            ),
         }
 
     # Use logged in user's identifier if it exists, otherwise use the anonymous identifier
     if user_sub:
-        pk = f'user#{user_sub}'
-        ttl = generate_ttl(7)  # Set a longer ttl for logged in users - we want to keep their cart for longer.
+        pk = f"user#{user_sub}"
+        ttl = generate_ttl(
+            7
+        )  # Set a longer ttl for logged in users - we want to keep their cart for longer.
     else:
-        pk = f'cart#{cart_id}'
+        pk = f"cart#{cart_id}"
         ttl = generate_ttl()
 
     table.put_item(
         Item={
-            'pk': pk,
-            'sk': f'product#{product_id}',
-            'quantity': quantity,
-            'expirationTime': ttl,
-            'productDetail': product
+            "pk": pk,
+            "sk": f"product#{product_id}",
+            "quantity": quantity,
+            "expirationTime": ttl,
+            "productDetail": product,
         }
     )
 
     return {
         "statusCode": 200,
         "headers": get_headers(cart_id),
-        "body": json.dumps({
-            "productId": product_id,
-            "quantity": quantity,
-            "message": "cart updated",
-        }),
+        "body": json.dumps(
+            {"productId": product_id, "quantity": quantity, "message": "cart updated"}
+        ),
     }

@@ -5,12 +5,13 @@ import os
 from mock_product_list import PRODUCT_LIST
 
 logger = logging.getLogger()
-logger.setLevel(os.environ['LOG_LEVEL'])
+logger.setLevel(os.environ["LOG_LEVEL"])
 
-HEADERS = {'Access-Control-Allow-Origin': os.environ.get('ALLOWED_ORIGIN'),
-           "Access-Control-Allow-Headers": "Content-Type",
-           "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
-           }
+HEADERS = {
+    "Access-Control-Allow-Origin": os.environ.get("ALLOWED_ORIGIN"),
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+}
 
 
 def lambda_handler(event, context):
@@ -24,7 +25,5 @@ def lambda_handler(event, context):
     return {
         "statusCode": 200,
         "headers": HEADERS,
-        "body": json.dumps(
-            {'products': product_list}
-        )
+        "body": json.dumps({"products": product_list}),
     }

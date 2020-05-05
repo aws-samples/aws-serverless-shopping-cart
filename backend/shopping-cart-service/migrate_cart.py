@@ -8,16 +8,16 @@ from aws_xray_sdk.core import patch
 from boto3.dynamodb.conditions import Key
 from shared import get_headers, generate_ttl, handle_decimal_type, get_cart_id
 
-libraries = ('boto3',)
+libraries = ("boto3",)
 patch(libraries)
 
 logger = logging.getLogger()
-logger.setLevel(os.environ['LOG_LEVEL'])
+logger.setLevel(os.environ["LOG_LEVEL"])
 
-dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table(os.environ['TABLE_NAME'])
-sqs = boto3.resource('sqs')
-queue = sqs.Queue(os.environ['DELETE_FROM_CART_SQS_QUEUE'])
+dynamodb = boto3.resource("dynamodb")
+table = dynamodb.Table(os.environ["TABLE_NAME"])
+sqs = boto3.resource("sqs")
+queue = sqs.Queue(os.environ["DELETE_FROM_CART_SQS_QUEUE"])
 
 
 def update_item(user_id, item):
@@ -26,15 +26,18 @@ def update_item(user_id, item):
     existing in the cart.
     """
     table.update_item(
-        Key={
-            'pk': f'user#{user_id}',
-            'sk': item['sk']
+        Key={"pk": f"user#{user_id}", "sk": item["sk"]},
+        ExpressionAttributeNames={
+            "#quantity": "quantity",
+            "#expirationTime": "expirationTime",
+            "#productDetail": "productDetail",
         },
-        ExpressionAttributeNames={'#quantity': 'quantity', '#expirationTime': 'expirationTime',
-                                  '#productDetail': 'productDetail'},
-        ExpressionAttributeValues={':val': item['quantity'], ':ttl': generate_ttl(days=30),
-                                   ':productDetail': item['productDetail']},
-        UpdateExpression='ADD #quantity :val SET #expirationTime = :ttl, #productDetail = :productDetail'
+        ExpressionAttributeValues={
+            ":val": item["quantity"],
+            ":ttl": generate_ttl(days=30),
+            ":productDetail": item["productDetail"],
+        },
+        UpdateExpression="ADD #quantity :val SET #expirationTime = :ttl, #productDetail = :productDetail",
     )
 
 
@@ -45,24 +48,24 @@ def lambda_handler(event, context):
     """
     logger.debug(event)
 
-    cart_id, _ = get_cart_id(event['headers'])
+    cart_id, _ = get_cart_id(event["headers"])
     try:
         # Because this method is authorized at API gateway layer, we don't need to validate the JWT claims here
-        user_id = event['requestContext']['authorizer']['claims']['sub']
+        user_id = event["requestContext"]["authorizer"]["claims"]["sub"]
     except KeyError:
 
         return {
             "statusCode": 400,
             "headers": get_headers(cart_id),
-            "body": json.dumps({
-                "message": "Invalid user"
-            })
+            "body": json.dumps({"message": "Invalid user"}),
         }
 
     # Get all cart items belonging to the user's anonymous identity
     response = table.query(
-        KeyConditionExpression=Key('pk').eq(f'cart#{cart_id}') & Key('sk').begins_with('product#'))
-    unauth_cart = response['Items']
+        KeyConditionExpression=Key("pk").eq(f"cart#{cart_id}")
+        & Key("sk").begins_with("product#")
+    )
+    unauth_cart = response["Items"]
 
     # Since there's no batch operation available for updating items, and there's no dependency between them, we can
     # run them in parallel threads.
@@ -71,7 +74,9 @@ def lambda_handler(event, context):
     for item in unauth_cart:
         # Store items with user identifier as pk instead of "unauthenticated" cart ID
         # Using threading library to perform updates in parallel
-        ddb_updateitem_thread = threading.Thread(target=update_item, args=(user_id, item))
+        ddb_updateitem_thread = threading.Thread(
+            target=update_item, args=(user_id, item)
+        )
         thread_list.append(ddb_updateitem_thread)
         ddb_updateitem_thread.start()
 
@@ -83,20 +88,20 @@ def lambda_handler(event, context):
         ddb_thread.join()  # Block main thread until all updates finished
 
     response = table.query(
-        KeyConditionExpression=Key('pk').eq(f'user#{user_id}') & Key('sk').begins_with('product#'),
-        ProjectionExpression='sk,quantity,productDetail',
-        ConsistentRead=True  # Perform a strongly consistent read here to ensure we get correct values after updates
+        KeyConditionExpression=Key("pk").eq(f"user#{user_id}")
+        & Key("sk").begins_with("product#"),
+        ProjectionExpression="sk,quantity,productDetail",
+        ConsistentRead=True,  # Perform a strongly consistent read here to ensure we get correct values after updates
     )
 
-    product_list = response.get('Items', [])
+    product_list = response.get("Items", [])
     for product in product_list:
-        product.update((k, v.replace('product#', '')) for k, v in product.items() if k == 'sk')
+        product.update(
+            (k, v.replace("product#", "")) for k, v in product.items() if k == "sk"
+        )
 
     return {
         "statusCode": 200,
         "headers": get_headers(cart_id),
-        "body": json.dumps(
-            {'products': product_list},
-            default=handle_decimal_type
-        ),
+        "body": json.dumps({"products": product_list}, default=handle_decimal_type),
     }

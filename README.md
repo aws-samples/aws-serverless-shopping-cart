@@ -21,7 +21,7 @@ POST
 Accepts a product id and quantity as json. Adds specified quantity of an item to cart.  
 
 `/cart/migrate`  
-Called after logging in - migrates items in an anonymous user's cart to belong to their logged in user.  
+Called after logging in - migrates items in an anonymous user's cart to belong to their logged in user. If you already have a cart on your logged in user, your "anonymous cart" will be merged with it when you log in.
 
 `/cart/checkout`  
 Currently just empties cart.
@@ -46,17 +46,18 @@ Returns details for a single product.
 python >= 3.8.0  
 SAM CLI, >= version 0.33.1  
 AWS CLI  
-AWS Account  
 yarn  
 
 ### Deploy the Backend
 
 Clone the project: `git clone <repo-url> && cd <repo-dir>`
 
-Build and deploy the resources, making note of the output variables:
+You will need an s3 bucket which will be used for deploying source code to AWS. You can use an existing bucket, or create a new one with the AWS CLI:  `aws s3 mb s3://mybucketname`
+
+Build and deploy the resources:  
 ``` bash
-export S3_BUCKET=your-s3-bucket-name
-make backend  # Deploys stacks for authentication, a product mock service and the shopping cart service.  
+export S3_BUCKET=your-s3-bucket-name  # Just the name of the bucket, don't include "s3://"
+make backend  # Deploys CloudFormation stacks for authentication, a product mock service and the shopping cart service.  
 ```
 
 ### Run the Frontend Locally
@@ -65,6 +66,8 @@ Start the frontend locally:
 ``` bash
 make frontend-serve  # Retrieves backend config from ssm parameter store to a .env file, then starts service.  
 ```
+
+Once the service is running, you can access the frontend on http://localhost:8080/ and start adding items to your cart. You can create an account by clicking on "Sign In" then "Create Account". Be sure to use a valid email address as you'll need to retrieve the verification code.
 
 **Note:** CORS headers on the backend service default to allowing http://localhost:8080/. You will see CORS errors if you access the frontend using the ip (http://127.0.0.1:8080/), or using a port other than 8080.  
 

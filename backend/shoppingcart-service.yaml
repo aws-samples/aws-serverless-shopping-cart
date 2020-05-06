@@ -287,6 +287,25 @@ Resources:
             Auth:
               Authorizer: CognitoAuthorizer
 
+  GetCartTotalFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: shopping-cart-service/
+      Handler: get_cart_total.lambda_handler
+      Runtime: python3.8
+      AutoPublishAlias: live
+      Timeout: 10
+      Layers:
+        - !Ref UtilsLayer
+      Role: !GetAtt ListCartRole.Arn
+      Events:
+        GetCartTotal:
+          Type: Api
+          Properties:
+            RestApiId: !Ref CartApi
+            Path: /cart/{product_id}/total
+            Method: get
+
   DeleteFromCartFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -339,7 +358,7 @@ Resources:
           Type: DynamoDB
           Properties:
             Stream: !GetAtt DynamoDBShoppingCartTable.StreamArn
-            BatchSize: 1000
+            BatchSize: 100
             MaximumBatchingWindowInSeconds: 60
             StartingPosition: LATEST
 

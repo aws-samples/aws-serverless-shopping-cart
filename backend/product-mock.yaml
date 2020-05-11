@@ -13,6 +13,8 @@ Globals:
     Timeout: 5
     Tracing: Active
     AutoPublishAlias: live
+    Runtime: python3.8
+    MemorySize: 256
     Environment:
       Variables:
         LOG_LEVEL: "DEBUG"
@@ -20,6 +22,8 @@ Globals:
 
   Api:
     EndpointConfiguration: REGIONAL
+    TracingEnabled: true
+    OpenApiVersion: '2.0'
     Cors:
       AllowMethods: "'OPTIONS,POST,GET'"
       AllowHeaders: "'Content-Type'"
@@ -31,8 +35,6 @@ Resources:
     Properties:
       CodeUri: product-mock-service/
       Handler: get_product.lambda_handler
-      Runtime: python3.8
-      MemorySize: 256
       Events:
         ListCart:
           Type: Api
@@ -45,8 +47,6 @@ Resources:
     Properties:
       CodeUri: product-mock-service/
       Handler: get_products.lambda_handler
-      Runtime: python3.7
-      MemorySize: 256
       Events:
         ListCart:
           Type: Api

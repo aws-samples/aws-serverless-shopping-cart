@@ -24,6 +24,7 @@ Globals:
     Timeout: 5
     MemorySize: 512
     Tracing: Active
+    AutoPublishAlias: live
     Environment:
       Variables:
         TABLE_NAME: !Ref DynamoDBShoppingCartTable
@@ -31,6 +32,8 @@ Globals:
         ALLOWED_ORIGIN: !Ref AllowedOrigin
   Api:
     EndpointConfiguration: REGIONAL
+    TracingEnabled: true
+    OpenApiVersion: '2.0'
     Cors:
       AllowMethods: "'OPTIONS,POST,GET,PUT'"
       AllowHeaders: "'Content-Type,Authorization'"
@@ -51,8 +54,6 @@ Resources:
       - ApiGWAccount
     Properties:
       StageName: Prod
-      TracingEnabled: true
-      OpenApiVersion: '2.0'
       MethodSettings:
         - DataTraceEnabled: True
           MetricsEnabled: True
@@ -177,7 +178,6 @@ Resources:
       CodeUri: shopping-cart-service/
       Handler: list_cart.lambda_handler
       Runtime: python3.8
-      AutoPublishAlias: live
       Role: !GetAtt ListCartRole.Arn
       Layers:
         - !Ref UtilsLayer
@@ -198,7 +198,6 @@ Resources:
       CodeUri: shopping-cart-service/
       Handler: add_to_cart.lambda_handler
       Runtime: python3.8
-      AutoPublishAlias: live
       Role: !GetAtt AddToCartRole.Arn
       Layers:
         - !Ref UtilsLayer
@@ -220,7 +219,6 @@ Resources:
       CodeUri: shopping-cart-service/
       Handler: update_cart.lambda_handler
       Runtime: python3.8
-      AutoPublishAlias: live
       Role: !GetAtt AddToCartRole.Arn
       Layers:
         - !Ref UtilsLayer
@@ -242,7 +240,6 @@ Resources:
       CodeUri: shopping-cart-service/
       Handler: migrate_cart.lambda_handler
       Runtime: python3.8
-      AutoPublishAlias: live
       Timeout: 30
       Layers:
         - !Ref UtilsLayer
@@ -268,7 +265,6 @@ Resources:
       CodeUri: shopping-cart-service/
       Handler: checkout_cart.lambda_handler
       Runtime: python3.8
-      AutoPublishAlias: live
       Timeout: 10
       Layers:
         - !Ref UtilsLayer
@@ -293,7 +289,6 @@ Resources:
       CodeUri: shopping-cart-service/
       Handler: get_cart_total.lambda_handler
       Runtime: python3.8
-      AutoPublishAlias: live
       Timeout: 10
       Layers:
         - !Ref UtilsLayer
@@ -312,7 +307,6 @@ Resources:
       CodeUri: shopping-cart-service/
       Handler: delete_from_cart.lambda_handler
       Runtime: python3.8
-      AutoPublishAlias: live
       ReservedConcurrentExecutions: 25  # Keep the ddb spikes down in case of many deletes at once
       Policies:
         - SQSPollerPolicy:

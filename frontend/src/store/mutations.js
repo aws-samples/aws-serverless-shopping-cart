@@ -39,8 +39,9 @@ const deleteFromCart = (state, productId) => {
     product.quantity = state.cart[cartProductIndex].stock;
     state.cart.splice(cartProductIndex, 1);
 }
-const setLoading = (state, value) => {
-    state.loading = value
+const setLoading = (state, payload) => {
+    state.loading = payload.value
+    state.loadingText = payload.message
 }
 const setCartLoading = (state, value) => {
     state.cartLoading += value

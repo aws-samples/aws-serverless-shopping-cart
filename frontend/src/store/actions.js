@@ -7,11 +7,13 @@ import {
     cartCheckout
 } from "@/backend/api.js"
 
+import router from '@/router'
 
 const setLoading = ({
     commit
-}, val) => {
-    commit("setLoading", val)
+}, payload) => {
+    commit("setLoading", {value: payload.value,
+    message: payload.message})
 }
 
 const fetchProducts = ({
@@ -24,11 +26,11 @@ const fetchProducts = ({
 const fetchCart = ({
     commit
 }) => {
-    commit("setLoading", true)
+    commit("setLoading", {value: true})
     getCart()
         .then((response) => {
             commit("setUpCart", response.products)
-            commit("setLoading", false)
+            commit("setLoading", {value: false})
         })
 }
 const addToCart = ({
@@ -102,23 +104,23 @@ const updateCart = ({
 const migrateCart = ({
     commit
 }) => {
-    commit("setLoading", true)
+    commit("setLoading", {value: true})
     cartMigrate()
         .then((response) => {
             commit("setUpCart", response.products)
-            commit("setLoading", false)
-
+            commit("setLoading", {value: false})
         })
 }
 
 const checkoutCart = ({
     commit
 }) => {
-    commit("setLoading", true)
+    commit("setLoading", {value: true, message: "This is where we'd handle payment before clearing the cart..."})
     cartCheckout()
         .then(() => {
             commit("setUpCart", [])
-            commit("setLoading", false)
+            setTimeout(function() {commit("setLoading", {value: false})}, 3000)
+            setTimeout(function() {router.push("/")}, 3200)
         })
 }
 

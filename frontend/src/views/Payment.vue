@@ -1,5 +1,6 @@
 <template>
   <v-container grid-list-md fluid class="mt-0" pt-0>
+    <h1>Example payment form</h1>
     <v-layout row wrap>
       <v-flex xs12 lg4 sm6>
         <v-card>
@@ -96,7 +97,7 @@ export default {
       if (this.$v.$invalid) {
         console.log("invalid form"); // eslint-disable-line no-console
       } else {
-        this.$store.dispatch("checkoutCart");
+        this.$store.dispatch("checkoutCart")
         // TODO: redirect to confirmation
       }
     }

@@ -44,9 +44,11 @@ Resources:
   UtilsLayer:
     Type: AWS::Serverless::LayerVersion
     Properties:
-      ContentUri: ./layers/build/shared-utils/
+      ContentUri: ./layers/
       CompatibleRuntimes:
         - python3.8
+    Metadata:
+      BuildMethod: python3.8
 
   CartApi:
     Type: AWS::Serverless::Api

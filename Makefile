@@ -3,7 +3,6 @@ all: backend frontend-build
 TEMPLATES = auth product-mock shoppingcart-service
 
 backend: 
-	$(MAKE) -C backend build_layers
 	$(MAKE) -C backend TEMPLATE=auth
 	$(MAKE) -C backend TEMPLATE=product-mock
 	$(MAKE) -C backend TEMPLATE=shoppingcart-service

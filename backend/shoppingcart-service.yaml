@@ -28,7 +28,7 @@ Globals:
     Environment:
       Variables:
         TABLE_NAME: !Ref DynamoDBShoppingCartTable
-        LOG_LEVEL: "DEBUG"
+        LOG_LEVEL: "INFO"
         ALLOWED_ORIGIN: !Ref AllowedOrigin
   Api:
     EndpointConfiguration: REGIONAL

@@ -2,7 +2,7 @@ import sys
 import unittest
 
 sys.path.append("..")  # Add application to path
-sys.path.append("./layers/build/shared-utils/python")  # Add built layer to path
+sys.path.append("./layers/")  # Add built layer to path
 
 import shared  # Import from layer
 

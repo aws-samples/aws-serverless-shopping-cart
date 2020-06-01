@@ -12,6 +12,9 @@ backend-delete:
 	$(MAKE) -C backend delete TEMPLATE=product-mock
 	$(MAKE) -C backend delete TEMPLATE=shoppingcart-service
 
+backend-tests:
+	$(MAKE) -C backend tests
+
 frontend-serve: 
 	$(MAKE) -C frontend serve
 

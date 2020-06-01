@@ -1,28 +1,26 @@
 import json
-import logging
 import os
 
 import boto3
-from aws_xray_sdk.core import patch
+from aws_lambda_powertools.logging import Logger
+from aws_lambda_powertools.tracing import Tracer
 
-libraries = ("boto3",)
-patch(libraries)
-
-logger = logging.getLogger()
-logger.setLevel(os.environ["LOG_LEVEL"])
+logger = Logger(service="shopping-cart")
+tracer = Tracer(service="shopping-cart")
 
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table(os.environ["TABLE_NAME"])
 
 
+@logger.inject_lambda_context(log_event=True)
+@tracer.capture_lambda_handler
 def lambda_handler(event, context):
     """
     Handle messages from SQS Queue containing cart items, and delete them from DynamoDB.
     """
-    logger.debug(event)
 
     records = event["Records"]
-
+    logger.info(f"Deleting {len(records)} records")
     with table.batch_writer() as batch:
         for item in records:
             item_body = json.loads(item["body"])

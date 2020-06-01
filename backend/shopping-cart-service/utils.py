@@ -1,13 +1,18 @@
 import os
 
 import requests
-from aws_xray_sdk.core import xray_recorder
+from aws_lambda_powertools.logging import Logger
+from aws_lambda_powertools.tracing import Tracer
+
 from shared import NotFoundException
 
 product_service_url = os.environ["PRODUCT_SERVICE_URL"]
 
+logger = Logger(service="shopping-cart")
+tracer = Tracer(service="shopping-cart")
 
-@xray_recorder.capture("get_product_from_external_api")
+
+@tracer.capture_method
 def get_product_from_external_service(product_id):
     """
     Call product API to retrieve product details

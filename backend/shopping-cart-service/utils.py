@@ -1,15 +1,14 @@
 import os
 
 import requests
-from aws_lambda_powertools.logging import Logger
-from aws_lambda_powertools.tracing import Tracer
+from aws_lambda_powertools import Logger, Tracer
 
 from shared import NotFoundException
 
 product_service_url = os.environ["PRODUCT_SERVICE_URL"]
 
-logger = Logger(service="shopping-cart")
-tracer = Tracer(service="shopping-cart")
+logger = Logger()
+tracer = Tracer()
 
 
 @tracer.capture_method
@@ -21,6 +20,7 @@ def get_product_from_external_service(product_id):
     try:
         response_dict = response.json()["product"]
     except KeyError:
+        logger.warn("No product found with id %s", product_id)
         raise NotFoundException
 
     return response_dict

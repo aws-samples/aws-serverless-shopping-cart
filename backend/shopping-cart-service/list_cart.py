@@ -1,14 +1,13 @@
 import json
 import os
 
-from aws_lambda_powertools.logging import Logger
-from aws_lambda_powertools.tracing import Tracer
+from aws_lambda_powertools import Logger, Tracer
 import boto3
 from boto3.dynamodb.conditions import Key
 from shared import handle_decimal_type, get_user_sub, get_cart_id, get_headers
 
-logger = Logger(service="shopping-cart")
-tracer = Tracer(service="shopping-cart")
+logger = Logger()
+tracer = Tracer()
 
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table(os.environ["TABLE_NAME"])

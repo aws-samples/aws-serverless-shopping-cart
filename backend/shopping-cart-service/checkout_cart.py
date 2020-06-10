@@ -3,14 +3,15 @@ import logging
 import os
 
 import boto3
-from aws_lambda_powertools.logging import Logger
-from aws_lambda_powertools.tracing import Tracer
+from aws_lambda_powertools import Logger, Tracer, Metrics
+
 
 from boto3.dynamodb.conditions import Key
 from shared import get_headers, generate_ttl, handle_decimal_type, get_cart_id
 
-logger = Logger(service="shopping-cart")
-tracer = Tracer(service="shopping-cart")
+logger = Logger()
+tracer = Tracer()
+metrics = Metrics()
 
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table(os.environ["TABLE_NAME"])
@@ -38,6 +39,7 @@ def update_item(user_id, item):
     )
 
 
+@metrics.log_metrics
 @logger.inject_lambda_context(log_event=True)
 @tracer.capture_lambda_handler
 def lambda_handler(event, context):
@@ -72,7 +74,7 @@ def lambda_handler(event, context):
             # Delete ordered items
             batch.delete_item(Key={"pk": item["pk"], "sk": item["sk"]})
 
-    # TODO: Notify another service that an order has been made
+    metrics.add_metric(name="CartCheckedOut", unit="Count", value=1)
 
     return {
         "statusCode": 200,

@@ -2,11 +2,10 @@ import json
 import os
 
 import boto3
-from aws_lambda_powertools.logging import Logger
-from aws_lambda_powertools.tracing import Tracer
+from aws_lambda_powertools import Logger, Tracer
 
-logger = Logger(service="shopping-cart")
-tracer = Tracer(service="shopping-cart")
+logger = Logger()
+tracer = Tracer()
 
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table(os.environ["TABLE_NAME"])
@@ -25,6 +24,8 @@ def lambda_handler(event, context):
         for item in records:
             item_body = json.loads(item["body"])
             batch.delete_item(Key={"pk": item_body["pk"], "sk": item_body["sk"]})
+    
+
 
     return {
         "statusCode": 200,

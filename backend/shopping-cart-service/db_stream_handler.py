@@ -3,13 +3,12 @@ import os
 from collections import Counter
 
 import boto3
-from aws_lambda_powertools.logging import Logger
-from aws_lambda_powertools.tracing import Tracer
+from aws_lambda_powertools import Logger, Tracer
 
 from boto3.dynamodb import types
 
-logger = Logger(service="shopping-cart")
-tracer = Tracer(service="shopping-cart")
+logger = Logger()
+tracer = Tracer()
 
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table(os.environ["TABLE_NAME"])

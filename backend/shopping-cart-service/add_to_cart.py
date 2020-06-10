@@ -2,9 +2,7 @@ import json
 import os
 
 import boto3
-from aws_lambda_powertools.logging import Logger
-from aws_lambda_powertools.tracing import Tracer
-from aws_lambda_powertools.metrics import Metrics, MetricUnit
+from aws_lambda_powertools import Metrics, Logger, Tracer
 
 from shared import (
     get_headers,
@@ -16,10 +14,9 @@ from shared import (
 from utils import get_product_from_external_service
 
 
-logger = Logger(service="shopping-cart")
-tracer = Tracer(service="shopping-cart")
+logger = Logger()
+tracer = Tracer()
 metrics = Metrics()
-metrics.add_namespace("shopping-cart")
 
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table(os.environ["TABLE_NAME"])
@@ -55,6 +52,7 @@ def lambda_handler(event, context):
 
     try:
         product = get_product_from_external_service(product_id)
+        logger.info("No product found with product_id: %s", product_id)
     except NotFoundException:
         return {
             "statusCode": 404,
@@ -106,8 +104,7 @@ def lambda_handler(event, context):
             },
             UpdateExpression="ADD #quantity :val SET #expirationTime = :ttl, #productDetail = :productDetail",
         )
-    metrics.add_metric(name="CartUpdated", unit=MetricUnit.Count, value=1)
-    metrics.add_dimension(name="function", value="add_to_cart")
+    metrics.add_metric(name="CartUpdated", unit="Count", value=1)
 
     return {
         "statusCode": 200,

@@ -4,14 +4,14 @@ import os
 import threading
 
 import boto3
-from aws_lambda_powertools.logging import Logger
-from aws_lambda_powertools.tracing import Tracer
+from aws_lambda_powertools import Metrics, Logger, Tracer
 
 from boto3.dynamodb.conditions import Key
 from shared import get_headers, generate_ttl, handle_decimal_type, get_cart_id
 
-logger = Logger(service="shopping-cart")
-tracer = Tracer(service="shopping-cart")
+logger = Logger()
+tracer = Tracer()
+metrics = Metrics()
 
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table(os.environ["TABLE_NAME"])
@@ -41,6 +41,7 @@ def update_item(user_id, item):
     )
 
 
+@metrics.log_metrics
 @logger.inject_lambda_context(log_event=True)
 @tracer.capture_lambda_handler
 def lambda_handler(event, context):
@@ -87,6 +88,9 @@ def lambda_handler(event, context):
 
     for ddb_thread in thread_list:
         ddb_thread.join()  # Block main thread until all updates finished
+
+    if unauth_cart:
+        metrics.add_metric(name="CartMigrated", unit="Count", value=1)
 
     response = table.query(
         KeyConditionExpression=Key("pk").eq(f"user#{user_id}")

@@ -32,7 +32,7 @@ PRODUCT_LIST = [
         "pictures": ["http://placehold.it/32x32"],
         "price": 2,
         "description": "Reprehenderit aliquip consequat quis excepteur et et esse exercitation adipisicing "
-                       "dolore nulla consequat.",
+        "dolore nulla consequat.",
         "category": "fruit",
         "name": "fresh prunes",
         "createdDate": "2017-03-17T03:06:53 -01:00",
@@ -141,7 +141,7 @@ PRODUCT_LIST = [
         "pictures": ["http://placehold.it/32x32"],
         "price": 77,
         "description": "Eu ullamco irure qui labore qui duis mollit eiusmod adipisicing fugiat adipisicing nostrud ut "
-                       "non.",
+        "non.",
         "category": "meat",
         "name": "packaged ham",
         "createdDate": "2018-09-12T07:24:46 -02:00",
@@ -166,7 +166,7 @@ PRODUCT_LIST = [
         "pictures": ["http://placehold.it/32x32"],
         "price": 283,
         "description": "Mollit proident aliquip consectetur irure qui veniam laboris aliqua proident id fugiat esse "
-                       "nulla.",
+        "nulla.",
         "category": "sweet",
         "name": "candied strawberries",
         "createdDate": "2018-09-06T06:03:43 -02:00",
@@ -191,7 +191,7 @@ PRODUCT_LIST = [
         "pictures": ["http://placehold.it/32x32"],
         "price": 197,
         "description": "Pariatur deserunt nostrud cupidatat ut officia voluptate adipisicing mollit sunt cillum quis "
-                       "magna dolore aute.",
+        "magna dolore aute.",
         "category": "vegetable",
         "name": "packaged lettuce",
         "createdDate": "2018-11-08T04:08:28 -01:00",
@@ -240,7 +240,7 @@ PRODUCT_LIST = [
         "pictures": ["http://placehold.it/32x32"],
         "price": 996,
         "description": "Aliqua tempor irure qui consectetur exercitation culpa minim magna laboris ex pariatur elit "
-                       "culpa.",
+        "culpa.",
         "category": "meat",
         "name": "fresh steak",
         "createdDate": "2017-05-14T03:39:21 -02:00",

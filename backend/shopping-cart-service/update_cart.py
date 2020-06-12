@@ -78,7 +78,7 @@ def lambda_handler(event, context):
         }
 
     # Use logged in user's identifier if it exists, otherwise use the anonymous identifier
-    
+
     if user_sub:
         pk = f"user#{user_sub}"
         ttl = generate_ttl(

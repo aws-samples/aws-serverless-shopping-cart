@@ -1,10 +1,7 @@
 <template>
   <div class="items">
     <v-list-item>
-      <v-badge>
         <v-icon>mdi-cart</v-icon>
-      </v-badge>
-
       <v-list-item-content>
         <v-list-item-title class="accent--text font-weight-bold">SHOPPING CART</v-list-item-title>
       </v-list-item-content>

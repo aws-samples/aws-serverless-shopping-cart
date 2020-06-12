@@ -3,20 +3,21 @@ import logging
 import os
 
 import boto3
-from aws_xray_sdk.core import patch
+from aws_lambda_powertools import Logger, Tracer, Metrics
+
+
 from boto3.dynamodb.conditions import Key
 from shared import get_headers, generate_ttl, handle_decimal_type, get_cart_id
 
-libraries = ("boto3",)
-patch(libraries)
-
-logger = logging.getLogger()
-logger.setLevel(os.environ["LOG_LEVEL"])
+logger = Logger()
+tracer = Tracer()
+metrics = Metrics()
 
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table(os.environ["TABLE_NAME"])
 
 
+@tracer.capture_method
 def update_item(user_id, item):
     """
     Update an item in the database, adding the quantity of the passed in item to the quantity of any products already
@@ -38,6 +39,9 @@ def update_item(user_id, item):
     )
 
 
+@metrics.log_metrics
+@logger.inject_lambda_context(log_event=True)
+@tracer.capture_lambda_handler
 def lambda_handler(event, context):
     """
     Update cart table to use user identifier instead of anonymous cookie value as a key. This will be called when a user
@@ -70,7 +74,7 @@ def lambda_handler(event, context):
             # Delete ordered items
             batch.delete_item(Key={"pk": item["pk"], "sk": item["sk"]})
 
-    # TODO: Notify another service that an order has been made
+    metrics.add_metric(name="CartCheckedOut", unit="Count", value=1)
 
     return {
         "statusCode": 200,

@@ -28,8 +28,10 @@ Globals:
     Environment:
       Variables:
         TABLE_NAME: !Ref DynamoDBShoppingCartTable
-        LOG_LEVEL: "DEBUG"
+        LOG_LEVEL: "INFO"
         ALLOWED_ORIGIN: !Ref AllowedOrigin
+        POWERTOOLS_SERVICE_NAME: shopping-cart
+        POWERTOOLS_METRICS_NAMESPACE: ecommerce-app
   Api:
     EndpointConfiguration: REGIONAL
     TracingEnabled: true

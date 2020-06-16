@@ -2,9 +2,9 @@ import sys
 import unittest
 
 sys.path.append("..")  # Add application to path
-sys.path.append("./layers/")  # Add built layer to path
+sys.path.append("./layers/")  # Add layer to path
 
-import shared  # Import from layer
+import shared  # noqa: E402  # import from layer
 
 
 class Tests(unittest.TestCase):

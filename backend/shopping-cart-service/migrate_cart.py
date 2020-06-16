@@ -1,13 +1,12 @@
 import json
-import logging
 import os
 import threading
 
 import boto3
-from aws_lambda_powertools import Metrics, Logger, Tracer
-
+from aws_lambda_powertools import Logger, Metrics, Tracer
 from boto3.dynamodb.conditions import Key
-from shared import get_headers, generate_ttl, handle_decimal_type, get_cart_id
+
+from shared import generate_ttl, get_cart_id, get_headers, handle_decimal_type
 
 logger = Logger()
 tracer = Tracer()
@@ -41,7 +40,7 @@ def update_item(user_id, item):
     )
 
 
-@metrics.log_metrics
+@metrics.log_metrics(capture_cold_start_metric=True)
 @logger.inject_lambda_context(log_event=True)
 @tracer.capture_lambda_handler
 def lambda_handler(event, context):
@@ -54,6 +53,7 @@ def lambda_handler(event, context):
     try:
         # Because this method is authorized at API gateway layer, we don't need to validate the JWT claims here
         user_id = event["requestContext"]["authorizer"]["claims"]["sub"]
+        logger.info("Migrating cart_id %s to user_id %s", cart_id, user_id)
     except KeyError:
 
         return {

@@ -2,9 +2,9 @@ import json
 import os
 
 import boto3
-from shared import handle_decimal_type
-
 from aws_lambda_powertools import Logger, Tracer
+
+from shared import handle_decimal_type
 
 logger = Logger()
 tracer = Tracer()

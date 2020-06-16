@@ -1,45 +1,23 @@
 import json
-import logging
 import os
 
 import boto3
-from aws_lambda_powertools import Logger, Tracer, Metrics
-
-
+from aws_lambda_powertools import Logger, Metrics, Tracer
 from boto3.dynamodb.conditions import Key
-from shared import get_headers, generate_ttl, handle_decimal_type, get_cart_id
+
+from shared import get_cart_id, get_headers, handle_decimal_type
 
 logger = Logger()
 tracer = Tracer()
 metrics = Metrics()
 
 dynamodb = boto3.resource("dynamodb")
+
+logger.debug("Initializing DDB Table %s", os.environ["TABLE_NAME"])
 table = dynamodb.Table(os.environ["TABLE_NAME"])
 
 
-@tracer.capture_method
-def update_item(user_id, item):
-    """
-    Update an item in the database, adding the quantity of the passed in item to the quantity of any products already
-    existing in the cart.
-    """
-    table.update_item(
-        Key={"pk": f"user#{user_id}", "sk": item["sk"]},
-        ExpressionAttributeNames={
-            "#quantity": "quantity",
-            "#expirationTime": "expirationTime",
-            "#productDetail": "productDetail",
-        },
-        ExpressionAttributeValues={
-            ":val": item["quantity"],
-            ":ttl": generate_ttl(days=30),
-            ":productDetail": item["productDetail"],
-        },
-        UpdateExpression="ADD #quantity :val SET #expirationTime = :ttl, #productDetail = :productDetail",
-    )
-
-
-@metrics.log_metrics
+@metrics.log_metrics(capture_cold_start_metric=True)
 @logger.inject_lambda_context(log_event=True)
 @tracer.capture_lambda_handler
 def lambda_handler(event, context):
@@ -68,13 +46,15 @@ def lambda_handler(event, context):
         ConsistentRead=True,  # Perform a strongly consistent read here to ensure we get correct and up to date cart
     )
 
+    cart_items = response.get("Items")
     # batch_writer will be used to update status for cart entries belonging to the user
     with table.batch_writer() as batch:
-        for item in response.get("Items"):
+        for item in cart_items:
             # Delete ordered items
             batch.delete_item(Key={"pk": item["pk"], "sk": item["sk"]})
 
     metrics.add_metric(name="CartCheckedOut", unit="Count", value=1)
+    logger.info({"action": "CartCheckedOut", "cartItems": cart_items})
 
     return {
         "statusCode": 200,

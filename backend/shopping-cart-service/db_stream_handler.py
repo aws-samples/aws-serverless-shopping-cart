@@ -1,10 +1,8 @@
-import logging
 import os
 from collections import Counter
 
 import boto3
 from aws_lambda_powertools import Logger, Tracer
-
 from boto3.dynamodb import types
 
 logger = Logger()

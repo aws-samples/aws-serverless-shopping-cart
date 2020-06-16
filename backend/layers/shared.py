@@ -5,7 +5,11 @@ import uuid
 from decimal import Decimal
 from http.cookies import SimpleCookie
 
+from aws_lambda_powertools import Tracer
+
 import cognitojwt
+
+tracer = Tracer()
 
 HEADERS = {
     "Access-Control-Allow-Origin": os.environ.get("ALLOWED_ORIGIN"),
@@ -19,6 +23,7 @@ class NotFoundException(Exception):
     pass
 
 
+@tracer.capture_method
 def handle_decimal_type(obj):
     """
     json serializer which works with Decimal types returned from DynamoDB.
@@ -31,6 +36,7 @@ def handle_decimal_type(obj):
     raise TypeError
 
 
+@tracer.capture_method
 def generate_ttl(days=1):
     """
     Generate epoch timestamp for number days in future
@@ -39,6 +45,7 @@ def generate_ttl(days=1):
     return calendar.timegm(future.utctimetuple())
 
 
+@tracer.capture_method
 def get_user_sub(jwt_token):
     """
     Validate JWT claims & retrieve user identifier
@@ -53,6 +60,7 @@ def get_user_sub(jwt_token):
     return verified_claims.get("sub")
 
 
+@tracer.capture_method
 def get_cart_id(event_headers):
     """
     Retrieve cart_id from cookies if it exists, otherwise set and return it
@@ -69,6 +77,7 @@ def get_cart_id(event_headers):
     return cart_cookie, generated
 
 
+@tracer.capture_method
 def get_headers(cart_id):
     """
     Get the headers to add to response data

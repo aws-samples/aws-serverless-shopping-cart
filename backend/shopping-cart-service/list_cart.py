@@ -1,10 +1,11 @@
 import json
 import os
 
-from aws_lambda_powertools import Logger, Tracer
 import boto3
+from aws_lambda_powertools import Logger, Tracer
 from boto3.dynamodb.conditions import Key
-from shared import handle_decimal_type, get_user_sub, get_cart_id, get_headers
+
+from shared import get_cart_id, get_headers, get_user_sub, handle_decimal_type
 
 logger = Logger()
 tracer = Tracer()

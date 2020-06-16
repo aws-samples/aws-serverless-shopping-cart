@@ -2,17 +2,16 @@ import json
 import os
 
 import boto3
-from aws_lambda_powertools import Metrics, Logger, Tracer
+from aws_lambda_powertools import Logger, Metrics, Tracer
 
 from shared import (
-    get_headers,
-    generate_ttl,
-    get_user_sub,
-    get_cart_id,
     NotFoundException,
+    generate_ttl,
+    get_cart_id,
+    get_headers,
+    get_user_sub,
 )
 from utils import get_product_from_external_service
-
 
 logger = Logger()
 tracer = Tracer()
@@ -23,7 +22,7 @@ table = dynamodb.Table(os.environ["TABLE_NAME"])
 product_service_url = os.environ["PRODUCT_SERVICE_URL"]
 
 
-@metrics.log_metrics
+@metrics.log_metrics(capture_cold_start_metric=True)
 @logger.inject_lambda_context(log_event=True)
 @tracer.capture_lambda_handler
 def lambda_handler(event, context):

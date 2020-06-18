@@ -1,7 +1,4 @@
 version: 1
-env:
-  variables:
-      ORIGIN: https://${AWS_BRANCH//\//-}.${AWS_APP_ID}.amplifyapp.com
 backend:
   phases:
     preBuild:
@@ -11,6 +8,7 @@ backend:
         - pip3 install --upgrade aws-sam-cli
     build:
       commands:
+        - export ORIGIN=https://${AWS_BRANCH//\//-}.${AWS_APP_ID}.amplifyapp.com
         - make backend
 frontend:
   phases:

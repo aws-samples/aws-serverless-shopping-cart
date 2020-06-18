@@ -4,6 +4,9 @@ env:
       ORIGIN: https://${AWS_BRANCH}.${AMPLIFY_APP_ID}.amplifyapp.com
 backend:
   phases:
+    preBuild:
+      commands:
+        - pip install --upgrade aws-sam-cli
     build:
       commands:
         - make backend

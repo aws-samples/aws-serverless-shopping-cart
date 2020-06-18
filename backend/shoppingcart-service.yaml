@@ -180,7 +180,7 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: list_cart.lambda_handler
-      Runtime: python3.8
+      Runtime: python3.7
       Role: !GetAtt ListCartRole.Arn
       Layers:
         - !Ref UtilsLayer
@@ -200,7 +200,7 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: add_to_cart.lambda_handler
-      Runtime: python3.8
+      Runtime: python3.7
       Role: !GetAtt AddToCartRole.Arn
       Layers:
         - !Ref UtilsLayer
@@ -221,7 +221,7 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: update_cart.lambda_handler
-      Runtime: python3.8
+      Runtime: python3.7
       Role: !GetAtt AddToCartRole.Arn
       Layers:
         - !Ref UtilsLayer
@@ -242,7 +242,7 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: migrate_cart.lambda_handler
-      Runtime: python3.8
+      Runtime: python3.7
       Timeout: 30
       Layers:
         - !Ref UtilsLayer
@@ -267,7 +267,7 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: checkout_cart.lambda_handler
-      Runtime: python3.8
+      Runtime: python3.7
       Timeout: 10
       Layers:
         - !Ref UtilsLayer
@@ -291,7 +291,7 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: get_cart_total.lambda_handler
-      Runtime: python3.8
+      Runtime: python3.7
       Timeout: 10
       Layers:
         - !Ref UtilsLayer
@@ -309,7 +309,7 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: delete_from_cart.lambda_handler
-      Runtime: python3.8
+      Runtime: python3.7
       ReservedConcurrentExecutions: 25  # Keep the ddb spikes down in case of many deletes at once
       Policies:
         - SQSPollerPolicy:
@@ -339,7 +339,7 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: db_stream_handler.lambda_handler
-      Runtime: python3.8
+      Runtime: python3.7
       Layers:
         - !Ref UtilsLayer
       Policies:

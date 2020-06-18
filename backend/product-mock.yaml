@@ -13,7 +13,7 @@ Globals:
     Timeout: 5
     Tracing: Active
     AutoPublishAlias: live
-    Runtime: python3.8
+    Runtime: python3.7
     MemorySize: 256
     Environment:
       Variables:

@@ -1,0 +1,22 @@
+version: 1
+env:
+  variables:
+      ORIGIN: https://${AWS_BRANCH}.${AMPLIFY_APP_ID}.amplifyapp.com
+backend:
+  phases:
+    build:
+      commands:
+        - make backend
+frontend:
+  phases:
+    # IMPORTANT - Please verify your build commands
+    build:
+      commands:
+        - make frontend-build
+  artifacts:
+    # IMPORTANT - Please verify your build output directory
+    baseDirectory: /frontend/dist
+    files:
+      - '**/*'
+  cache:
+    paths: []

@@ -17,7 +17,6 @@ Parameters:
     Default: '/serverless-shopping-cart-demo/products/products-api-url'
   AllowedOrigin:
     Type: 'String'
-    Default: 'http://localhost:8080'
 
 Globals:
   Function:

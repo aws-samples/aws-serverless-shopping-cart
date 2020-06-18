@@ -1,12 +1,13 @@
 all: build deploy
 
+ORIGIN ?= http://localhost:8080
 STACKNAME = aws-serverless-shopping-cart-$(TEMPLATE)
 
 build:
 	sam build -t $(TEMPLATE).yaml
 
 deploy:  # s3 bucket still needed for layer
-	sam deploy --capabilities CAPABILITY_NAMED_IAM --stack-name $(STACKNAME) --s3-bucket $(S3_BUCKET) || true
+	sam deploy --capabilities CAPABILITY_NAMED_IAM --stack-name $(STACKNAME) --s3-bucket $(S3_BUCKET) --parameter-overrides AllowedOrigin=$(ORIGIN) || true
 
 tests:
 	py.test -v

@@ -1,11 +1,13 @@
 version: 1
 env:
   variables:
-      ORIGIN: https://${AWS_BRANCH}.${AMPLIFY_APP_ID}.amplifyapp.com
+      ORIGIN: https://${AWS_BRANCH//\//-}.${AWS_APP_ID}.amplifyapp.com
 backend:
   phases:
     preBuild:
       commands:
+        - yum install gcc openssl-devel bzip2-devel libffi-devel
+        - 
         - pip3 install --upgrade aws-sam-cli
     build:
       commands:

@@ -107,3 +107,4 @@ dist/*
 /amplify
 
 *.local
+.env

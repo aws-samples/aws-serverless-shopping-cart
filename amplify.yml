@@ -6,7 +6,7 @@ backend:
   phases:
     preBuild:
       commands:
-        - pip install --upgrade aws-sam-cli
+        - pip3 install --upgrade aws-sam-cli
     build:
       commands:
         - make backend

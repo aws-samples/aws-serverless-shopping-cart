@@ -88,7 +88,7 @@ def get_headers(cart_id):
     cookie["cartId"]["max-age"] = (60 * 60) * 24  # 1 day
     cookie["cartId"]["secure"] = True
     cookie["cartId"]["httponly"] = True
-    # cookie["cartId"]["samesite"] = "None"
+    cookie["cartId"]["samesite"] = "None"
     cookie["cartId"]["path"] = "/"
     headers["Set-Cookie"] = cookie["cartId"].OutputString()
     return headers

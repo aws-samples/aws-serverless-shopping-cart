@@ -15,6 +15,17 @@ backend-delete:
 backend-tests:
 	$(MAKE) -C backend tests
 
+amplify-deploy:
+	aws cloudformation deploy \
+		--template-file ./amplify-ci/amplify-template.yaml \
+		--capabilities CAPABILITY_IAM \
+		--parameter-overrides \
+			OauthToken=$(GITHUB_OAUTH_TOKEN) \
+			Repository=$(GITHUB_REPO) \
+			BranchName=$(GITHUB_BRANCH) \
+			SrcS3Bucket=$(S3_BUCKET) \
+		--stack-name CartApp
+
 frontend-serve: 
 	$(MAKE) -C frontend serve
 

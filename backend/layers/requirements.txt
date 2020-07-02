@@ -1,2 +1,4 @@
 requests==2.22.0
 cognitojwt==1.1.0
+aws-lambda-powertools==1.0.0
+boto3==1.10.34

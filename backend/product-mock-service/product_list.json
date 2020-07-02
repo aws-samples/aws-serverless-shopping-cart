@@ -1,0 +1,502 @@
+[
+    {
+        "category": "fruit",
+        "createdDate": "2017-04-17T01:14:03 -02:00",
+        "description": "Culpa non veniam deserunt dolor irure elit cupidatat culpa consequat nulla irure aliqua.",
+        "modifiedDate": "2019-03-13T12:18:27 -01:00",
+        "name": "packaged strawberries",
+        "package": {
+            "height": 948,
+            "length": 455,
+            "weight": 54,
+            "width": 905
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 716,
+        "productId": "4c1fadaa-213a-4ea8-aa32-58c217604e3c",
+        "tags": [
+            "mollit",
+            "ad",
+            "eiusmod",
+            "irure",
+            "tempor"
+        ]
+    },
+    {
+        "category": "sweets",
+        "createdDate": "2017-04-06T06:21:36 -02:00",
+        "description": "Dolore ipsum eiusmod dolore aliquip laborum laborum aute ipsum commodo id irure duis ipsum.",
+        "modifiedDate": "2019-09-21T12:08:48 -02:00",
+        "name": "candied prunes",
+        "package": {
+            "height": 329,
+            "length": 179,
+            "weight": 293,
+            "width": 741
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 35,
+        "productId": "d2580eff-d105-45a5-9b21-ba61995bc6da",
+        "tags": [
+            "laboris",
+            "dolor",
+            "in",
+            "labore",
+            "duis"
+        ]
+    },
+    {
+        "category": "fruit",
+        "createdDate": "2017-03-17T03:06:53 -01:00",
+        "description": "Reprehenderit aliquip consequat quis excepteur et et esse exercitation adipisicing dolore nulla consequat.",
+        "modifiedDate": "2019-11-25T12:32:49 -01:00",
+        "name": "fresh prunes",
+        "package": {
+            "height": 736,
+            "length": 567,
+            "weight": 41,
+            "width": 487
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 2,
+        "productId": "a6dd7187-40b6-4cb5-b73c-aecd655c6d9a",
+        "tags": [
+            "nisi",
+            "quis",
+            "sint",
+            "adipisicing",
+            "pariatur"
+        ]
+    },
+    {
+        "category": "vegetable",
+        "createdDate": "2018-07-17T02:14:55 -02:00",
+        "description": "Minim qui elit dolor est commodo excepteur ea voluptate eu dolor culpa magna.",
+        "modifiedDate": "2019-09-05T03:36:34 -02:00",
+        "name": "packaged tomatoes",
+        "package": {
+            "height": 4,
+            "length": 756,
+            "weight": 607,
+            "width": 129
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 97,
+        "productId": "c0fbcc6b-7a70-41ac-aac4-f8fd237dc62e",
+        "tags": [
+            "dolor",
+            "officia",
+            "fugiat",
+            "officia",
+            "voluptate"
+        ]
+    },
+    {
+        "category": "vegetable",
+        "createdDate": "2017-07-25T12:00:11 -02:00",
+        "description": "Labore dolore velit mollit aute qui magna elit excepteur officia cupidatat ea ea aliqua.",
+        "modifiedDate": "2019-10-04T06:32:14 -02:00",
+        "name": "fresh tomatoes",
+        "package": {
+            "height": 881,
+            "length": 252,
+            "weight": 66,
+            "width": 431
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 144,
+        "productId": "cb40c919-033a-47d6-8d00-1d73e2df20fe",
+        "tags": [
+            "nostrud",
+            "elit",
+            "Lorem",
+            "occaecat",
+            "duis"
+        ]
+    },
+    {
+        "category": "vegetable",
+        "createdDate": "2017-01-07T05:28:03 -01:00",
+        "description": "Ad eiusmod cupidatat duis dolor mollit labore mollit eu.",
+        "modifiedDate": "2019-04-03T10:36:25 -02:00",
+        "name": "fresh lettuce",
+        "package": {
+            "height": 813,
+            "length": 932,
+            "weight": 457,
+            "width": 436
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 51,
+        "productId": "12929eb9-3eb7-4217-99e4-1a39c39217b6",
+        "tags": [
+            "ad",
+            "ipsum",
+            "est",
+            "eiusmod",
+            "duis"
+        ]
+    },
+    {
+        "category": "meat",
+        "createdDate": "2018-12-03T12:33:44 -01:00",
+        "description": "Amet cupidatat anim ipsum pariatur sit eu.",
+        "modifiedDate": "2019-04-17T06:31:47 -02:00",
+        "name": "packaged steak",
+        "package": {
+            "height": 707,
+            "length": 417,
+            "weight": 491,
+            "width": 549
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 894,
+        "productId": "9fd9ef32-493f-4188-99f5-3aa809aa4fa9",
+        "tags": [
+            "fugiat",
+            "velit",
+            "non",
+            "magna",
+            "laboris"
+        ]
+    },
+    {
+        "category": "vegetable",
+        "createdDate": "2017-04-27T06:48:08 -02:00",
+        "description": "Labore est aliqua laborum ea laboris voluptate cillum aute duis occaecat.",
+        "modifiedDate": "2019-11-01T10:23:57 -01:00",
+        "name": "fresh lettuce",
+        "package": {
+            "height": 21,
+            "length": 311,
+            "weight": 817,
+            "width": 964
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 452,
+        "productId": "20db6331-1084-48ff-8c4f-c1d98a6a1aa4",
+        "tags": [
+            "laborum",
+            "in",
+            "aliquip",
+            "sint",
+            "quis"
+        ]
+    },
+    {
+        "category": "sweet",
+        "createdDate": "2017-11-24T04:01:33 -01:00",
+        "description": "Fugiat sunt in eu eu occaecat.",
+        "modifiedDate": "2019-05-19T05:53:56 -02:00",
+        "name": "half-eaten cake",
+        "package": {
+            "height": 337,
+            "length": 375,
+            "weight": 336,
+            "width": 1
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 322,
+        "productId": "8c843a54-27d7-477c-81b3-c21db12ed1c9",
+        "tags": [
+            "officia",
+            "proident",
+            "officia",
+            "commodo",
+            "nisi"
+        ]
+    },
+    {
+        "category": "dairy",
+        "createdDate": "2018-05-29T11:46:28 -02:00",
+        "description": "Aliqua officia magna do ipsum laboris anim magna nulla sit labore nulla qui duis.",
+        "modifiedDate": "2019-05-29T05:33:49 -02:00",
+        "name": "leftover cheese",
+        "package": {
+            "height": 267,
+            "length": 977,
+            "weight": 85,
+            "width": 821
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 163,
+        "productId": "8d2024c0-6c05-4691-a0ff-dd52959bd1df",
+        "tags": [
+            "excepteur",
+            "ipsum",
+            "nulla",
+            "nisi",
+            "velit"
+        ]
+    },
+    {
+        "category": "bakery",
+        "createdDate": "2018-09-22T05:22:38 -02:00",
+        "description": "Ullamco commodo cupidatat reprehenderit eu sunt.",
+        "modifiedDate": "2019-03-11T06:10:38 -01:00",
+        "name": "fresh croissants",
+        "package": {
+            "height": 122,
+            "length": 23,
+            "weight": 146,
+            "width": 694
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 634,
+        "productId": "867ecb2b-ef08-446e-8360-b63f60969e3d",
+        "tags": [
+            "labore",
+            "dolor",
+            "aliquip",
+            "nulla",
+            "aute"
+        ]
+    },
+    {
+        "category": "meat",
+        "createdDate": "2018-09-12T07:24:46 -02:00",
+        "description": "Eu ullamco irure qui labore qui duis mollit eiusmod adipisicing fugiat adipisicing nostrud ut non.",
+        "modifiedDate": "2019-10-28T01:25:50 -01:00",
+        "name": "packaged ham",
+        "package": {
+            "height": 902,
+            "length": 278,
+            "weight": 775,
+            "width": 31
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 77,
+        "productId": "684011fc-ecfd-4557-a6df-9fc977365826",
+        "tags": [
+            "voluptate",
+            "laborum",
+            "exercitation",
+            "anim",
+            "anim"
+        ]
+    },
+    {
+        "category": "bakery",
+        "createdDate": "2017-06-12T09:15:36 -02:00",
+        "description": "Eu culpa nulla est et anim sint amet.",
+        "modifiedDate": "2019-08-22T04:22:39 -02:00",
+        "name": "fresh bread",
+        "package": {
+            "height": 551,
+            "length": 976,
+            "weight": 47,
+            "width": 846
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 805,
+        "productId": "b027697d-a070-4c8f-8b9a-b8c80b2eb0ba",
+        "tags": [
+            "nostrud",
+            "in",
+            "duis",
+            "laboris",
+            "minim"
+        ]
+    },
+    {
+        "category": "sweet",
+        "createdDate": "2018-09-06T06:03:43 -02:00",
+        "description": "Mollit proident aliquip consectetur irure qui veniam laboris aliqua proident id fugiat esse nulla.",
+        "modifiedDate": "2019-10-16T10:53:33 -02:00",
+        "name": "candied strawberries",
+        "package": {
+            "height": 55,
+            "length": 32,
+            "weight": 661,
+            "width": 694
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 283,
+        "productId": "7e0dbfa9-a672-4987-a26c-f601d177463a",
+        "tags": [
+            "minim",
+            "irure",
+            "in",
+            "duis",
+            "labore"
+        ]
+    },
+    {
+        "category": "bakery",
+        "createdDate": "2017-07-23T12:27:34 -02:00",
+        "description": "Ex non proident et eiusmod et elit est exercitation anim qui ullamco elit.",
+        "modifiedDate": "2019-09-04T08:25:44 -02:00",
+        "name": "fresh pie",
+        "package": {
+            "height": 718,
+            "length": 59,
+            "weight": 18,
+            "width": 962
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 646,
+        "productId": "d1d527b8-9cef-4e97-a873-22236f3ee289",
+        "tags": [
+            "in",
+            "ea",
+            "excepteur",
+            "id",
+            "dolore"
+        ]
+    },
+    {
+        "category": "vegetable",
+        "createdDate": "2018-11-08T04:08:28 -01:00",
+        "description": "Pariatur deserunt nostrud cupidatat ut officia voluptate adipisicing mollit sunt cillum quis magna dolore aute.",
+        "modifiedDate": "2019-10-11T10:28:49 -02:00",
+        "name": "packaged lettuce",
+        "package": {
+            "height": 81,
+            "length": 57,
+            "weight": 653,
+            "width": 367
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 197,
+        "productId": "11663d33-e54d-49da-ba6f-44d016ecde7e",
+        "tags": [
+            "incididunt",
+            "in",
+            "adipisicing",
+            "eu",
+            "tempor"
+        ]
+    },
+    {
+        "category": "meat",
+        "createdDate": "2018-09-28T04:01:24 -02:00",
+        "description": "Dolore nulla laboris incididunt laborum.",
+        "modifiedDate": "2019-08-05T01:06:02 -02:00",
+        "name": "leftover ham",
+        "package": {
+            "height": 246,
+            "length": 639,
+            "weight": 354,
+            "width": 953
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 728,
+        "productId": "e173d669-b449-4226-af2e-128142abdd30",
+        "tags": [
+            "exercitation",
+            "magna",
+            "ex",
+            "quis",
+            "ad"
+        ]
+    },
+    {
+        "category": "dairy",
+        "createdDate": "2018-08-23T06:31:47 -02:00",
+        "description": "Pariatur mollit voluptate enim qui pariatur deserunt elit.",
+        "modifiedDate": "2019-10-02T10:50:16 -02:00",
+        "name": "fresh milk",
+        "package": {
+            "height": 576,
+            "length": 948,
+            "weight": 535,
+            "width": 646
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 164,
+        "productId": "2a5b681c-ec7f-4bd4-a51e-57a5b6591f7f",
+        "tags": [
+            "labore",
+            "id",
+            "mollit",
+            "occaecat",
+            "elit"
+        ]
+    },
+    {
+        "category": "vegetable",
+        "createdDate": "2018-02-21T01:55:54 -01:00",
+        "description": "Consectetur laborum ipsum ad laboris.",
+        "modifiedDate": "2019-02-23T08:50:01 -01:00",
+        "name": "half-eaten lettuce",
+        "package": {
+            "height": 348,
+            "length": 119,
+            "weight": 723,
+            "width": 44
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 583,
+        "productId": "de979b05-9d71-4c7e-b10f-636332ccb6c1",
+        "tags": [
+            "id",
+            "velit",
+            "cillum",
+            "irure",
+            "aute"
+        ]
+    },
+    {
+        "category": "meat",
+        "createdDate": "2017-05-14T03:39:21 -02:00",
+        "description": "Aliqua tempor irure qui consectetur exercitation culpa minim magna laboris ex pariatur elit culpa.",
+        "modifiedDate": "2019-11-24T02:23:27 -01:00",
+        "name": "fresh steak",
+        "package": {
+            "height": 328,
+            "length": 7,
+            "weight": 439,
+            "width": 747
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 996,
+        "productId": "aa91060a-3601-4cb8-a2cc-025d09c7a9b7",
+        "tags": [
+            "qui",
+            "dolore",
+            "culpa",
+            "est",
+            "duis"
+        ]
+    }
+]

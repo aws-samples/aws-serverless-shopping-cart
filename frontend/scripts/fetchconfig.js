@@ -2,7 +2,7 @@ process.env.AWS_SDK_LOAD_CONFIG = true;
 var fs = require('fs');
 
 var args = process.argv.slice(2);
-var envtype = args[0] ? args[0] : 'local'
+var envtype = args[0] ? args[0] : ''
 var AWS = require('aws-sdk');
 var ssm = new AWS.SSM();
 
@@ -34,7 +34,13 @@ params
     .then(data => {
         formatParams(data.Parameters)
         output.push("VUE_APP_AWS_REGION=" + AWS.config.region)
-        var fileName = "./.env." + envtype
+        var fileName
+        if (envtype) {
+            fileName = "./.env." + envtype
+        }
+        else {
+            fileName = "./.env"
+        }
         fs.writeFile(fileName, output.join('\n'), function (err) {
             if (err) {
                 return console.log(err);  // eslint-disable-line no-console

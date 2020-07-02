@@ -17,7 +17,6 @@ Parameters:
     Default: '/serverless-shopping-cart-demo/products/products-api-url'
   AllowedOrigin:
     Type: 'String'
-    Default: 'http://localhost:8080'
 
 Globals:
   Function:
@@ -25,6 +24,7 @@ Globals:
     MemorySize: 512
     Tracing: Active
     AutoPublishAlias: live
+    Runtime: python3.8
     Environment:
       Variables:
         TABLE_NAME: !Ref DynamoDBShoppingCartTable
@@ -181,7 +181,6 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: list_cart.lambda_handler
-      Runtime: python3.8
       Role: !GetAtt ListCartRole.Arn
       Layers:
         - !Ref UtilsLayer
@@ -201,7 +200,6 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: add_to_cart.lambda_handler
-      Runtime: python3.8
       Role: !GetAtt AddToCartRole.Arn
       Layers:
         - !Ref UtilsLayer
@@ -222,7 +220,6 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: update_cart.lambda_handler
-      Runtime: python3.8
       Role: !GetAtt AddToCartRole.Arn
       Layers:
         - !Ref UtilsLayer
@@ -243,7 +240,6 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: migrate_cart.lambda_handler
-      Runtime: python3.8
       Timeout: 30
       Layers:
         - !Ref UtilsLayer
@@ -268,7 +264,6 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: checkout_cart.lambda_handler
-      Runtime: python3.8
       Timeout: 10
       Layers:
         - !Ref UtilsLayer
@@ -292,7 +287,6 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: get_cart_total.lambda_handler
-      Runtime: python3.8
       Timeout: 10
       Layers:
         - !Ref UtilsLayer
@@ -310,7 +304,6 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: delete_from_cart.lambda_handler
-      Runtime: python3.8
       ReservedConcurrentExecutions: 25  # Keep the ddb spikes down in case of many deletes at once
       Policies:
         - SQSPollerPolicy:
@@ -340,7 +333,6 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: db_stream_handler.lambda_handler
-      Runtime: python3.8
       Layers:
         - !Ref UtilsLayer
       Policies:

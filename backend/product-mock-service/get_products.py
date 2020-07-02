@@ -3,10 +3,11 @@ import os
 
 from aws_lambda_powertools import Logger, Tracer
 
-from mock_product_list import PRODUCT_LIST
-
 logger = Logger()
 tracer = Tracer()
+
+with open('product_list.json', 'r') as product_list:
+    product_list = json.load(product_list)
 
 HEADERS = {
     "Access-Control-Allow-Origin": os.environ.get("ALLOWED_ORIGIN"),
@@ -22,7 +23,6 @@ def lambda_handler(event, context):
     Return list of all products.
     """
     logger.debug("Fetching product list")
-    product_list = PRODUCT_LIST
 
     return {
         "statusCode": 200,

@@ -178,6 +178,8 @@ Resources:
 
   ListCartFunction:
     Type: AWS::Serverless::Function
+    DependsOn:
+      - LambdaLoggingPolicy
     Properties:
       CodeUri: shopping-cart-service/
       Handler: list_cart.lambda_handler
@@ -197,6 +199,8 @@ Resources:
 
   AddToCartFunction:
     Type: AWS::Serverless::Function
+    DependsOn:
+      - LambdaLoggingPolicy
     Properties:
       CodeUri: shopping-cart-service/
       Handler: add_to_cart.lambda_handler
@@ -217,6 +221,8 @@ Resources:
 
   UpdateCartFunction:
     Type: AWS::Serverless::Function
+    DependsOn:
+      - LambdaLoggingPolicy
     Properties:
       CodeUri: shopping-cart-service/
       Handler: update_cart.lambda_handler
@@ -237,6 +243,8 @@ Resources:
 
   MigrateCartFunction:
     Type: AWS::Serverless::Function
+    DependsOn:
+      - LambdaLoggingPolicy
     Properties:
       CodeUri: shopping-cart-service/
       Handler: migrate_cart.lambda_handler
@@ -261,6 +269,8 @@ Resources:
 
   CheckoutCartFunction:
     Type: AWS::Serverless::Function
+    DependsOn:
+      - LambdaLoggingPolicy
     Properties:
       CodeUri: shopping-cart-service/
       Handler: checkout_cart.lambda_handler
@@ -284,6 +294,8 @@ Resources:
 
   GetCartTotalFunction:
     Type: AWS::Serverless::Function
+    DependsOn:
+      - LambdaLoggingPolicy
     Properties:
       CodeUri: shopping-cart-service/
       Handler: get_cart_total.lambda_handler
@@ -301,6 +313,8 @@ Resources:
 
   DeleteFromCartFunction:
     Type: AWS::Serverless::Function
+    DependsOn:
+      - LambdaLoggingPolicy
     Properties:
       CodeUri: shopping-cart-service/
       Handler: delete_from_cart.lambda_handler
@@ -330,6 +344,8 @@ Resources:
 
   CartDBStreamHandler:
     Type: AWS::Serverless::Function
+    DependsOn:
+      - LambdaLoggingPolicy
     Properties:
       CodeUri: shopping-cart-service/
       Handler: db_stream_handler.lambda_handler

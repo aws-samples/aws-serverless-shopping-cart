@@ -1,0 +1,159 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  Repository:
+    Type: String
+    Description: GitHub Repository URL
+
+  BranchName:
+    Type: String
+    Description: Github branch name
+    Default: master
+
+  OauthToken:
+    Type: String
+    Description: GitHub Repository URL
+    NoEcho: true
+
+  SrcS3Bucket:
+    Type: String
+    Description: S3 Bucket for source code storage  
+
+Resources:
+  AmplifyRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - amplify.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Policies:
+        - PolicyName: Amplify
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              -
+                Effect: "Allow"
+                Action:
+                    - "s3:PutObject"
+                    - "s3:GetObject"
+                    - "s3:CreateMultipartUpload"
+                    - "s3:ListBucket"
+                Resource:
+                    - !Sub "arn:aws:s3:::${SrcS3Bucket}"
+                    - !Sub "arn:aws:s3:::${SrcS3Bucket}/*"
+              -
+                Effect: "Allow"
+                Action:
+                    - "cloudformation:Describe*"
+                    - "cloudformation:Create*"
+                    - "cloudformation:Execute*"
+                Resource:
+                    - "*"
+              -
+                Effect: Allow
+                Action:
+                  - lambda:*
+                Resource: 
+                  - !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:*"
+                  - !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:layer:*"
+              -
+                Effect: Allow
+                Action:
+                  - lambda:*EventSourceMapping
+                Resource: 
+                  - "*"
+              -
+                Effect: "Allow"
+                Action:
+                    - "cloudformation:GetTemplateSummary"
+                Resource: "*"
+              -
+                  Effect: "Allow"
+                  Action:
+                      - "iam:GetRole"
+                      - "iam:Create*"
+                      - "iam:Delete*"
+                      - "iam:PassRole"
+                      - "iam:*RolePolicy"
+                  Resource:
+                      - "*"
+              -
+                  Effect: "Allow"
+                  Action:
+                      - "apigateway:*"
+                  Resource:
+                      - "*"
+              -
+                  Effect: "Allow"
+                  Action:
+                      - "ssm:*"
+                  Resource:
+                      - "*"       
+              -
+                  Effect: "Allow"
+                  Action:
+                      - "dynamodb:List*"
+                      - "dynamodb:Describe*"
+                      - "dynamodb:TagResource"
+                      - "dynamodb:UnTagResource"
+                      - "dynamodb:Update*"
+                      - "dynamodb:Create*"
+                      - "dynamodb:DeleteTable"
+                  Resource:
+                      - "*"   
+              -
+                  Effect: "Allow"
+                  Action:
+                      - "sqs:*"
+                  Resource:
+                      - "*"
+              -
+                  Effect: "Allow"
+                  Action:
+                      - "cognito-idp:*"
+                  Resource:
+                      - "*"   
+  AmplifyApp:
+    Type: AWS::Amplify::App
+    Properties:
+      Name: CartApp
+      Repository: !Ref Repository
+      Description: AWS serverless shopping cart
+      OauthToken: !Ref OauthToken
+      EnvironmentVariables:
+        - Name: _CUSTOM_IMAGE
+          Value: nikolaik/python-nodejs:python3.8-nodejs12
+        - Name: S3_BUCKET
+          Value: !Ref SrcS3Bucket
+        - Name: STACKNAME
+          Value: "aws-serverless-shopping-cart-amplify"
+      Tags:
+        - Key: Name
+          Value: ShoppingCart
+      IAMServiceRole: !GetAtt AmplifyRole.Arn
+
+  AmplifyBranch:
+    Type: AWS::Amplify::Branch
+    Properties:
+      BranchName: !Ref BranchName
+      AppId: !GetAtt AmplifyApp.AppId
+      Description: Master Branch
+      EnableAutoBuild: true
+      Tags:
+        - Key: Name
+          Value: shoppingcart-master
+        - Key: Branch
+          Value: master
+
+Outputs:
+  DefaultDomain:
+    Value: !GetAtt AmplifyApp.DefaultDomain
+
+  MasterBranchUrl:
+    Value: !Join [ ".", [ !GetAtt AmplifyBranch.BranchName, !GetAtt AmplifyApp.DefaultDomain ]]

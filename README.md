@@ -79,14 +79,13 @@ yarn
 
 Clone the project: `git clone <repo-url> && cd <repo-dir>`
 
-If you wish to use a named profile for your AWS credentials, you can set the environment variable `AWS_PROFILE` before running the below commands. For a profile named "development": `export AWS_PROFILE=development`.
+If you wish to use a named profile for your AWS credentials, you can set the environment variable `AWS_PROFILE` before running the below commands. For a profile named "development": `export AWS_PROFILE=development`.  
 
-You will need an s3 bucket which will be used for deploying source code to AWS. You can use an existing bucket, or create a new one with the AWS CLI:  `aws s3 mb s3://mybucketname`
+An S3 bucket will be created for you which will be used for deploying source code to AWS. If you wish to use an existing bucket instead, you can manually set the `S3_BUCKET` environment variable to the name of your bucket.  
 
 Build and deploy the resources:  
 ``` bash
-export S3_BUCKET=your-s3-bucket-name  # Just the name of the bucket, don't include "s3://"
-make backend  # Deploys CloudFormation stacks for authentication, a product mock service and the shopping cart service.  
+make backend  # Creates S3 bucket if not existing already, then deploys CloudFormation stacks for authentication, a product mock service and the shopping cart service.  
 ```
 
 ### Run the Frontend Locally

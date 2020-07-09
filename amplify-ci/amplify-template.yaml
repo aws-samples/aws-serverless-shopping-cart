@@ -118,7 +118,14 @@ Resources:
                   Action:
                       - "cognito-idp:*"
                   Resource:
-                      - "*"   
+                      - "*"
+              -
+                  Effect: "Allow"
+                  Action:
+                      - "sts:GetCallerIdentity"
+                  Resource:
+                      - "*"
+
   AmplifyApp:
     Type: AWS::Amplify::App
     Properties:

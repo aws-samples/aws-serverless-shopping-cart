@@ -25,7 +25,6 @@ def lambda_handler(event, context):
     Update cart table to use user identifier instead of anonymous cookie value as a key. This will be called when a user
     is logged in.
     """
-    logger.debug(event)
     cart_id, _ = get_cart_id(event["headers"])
 
     try:

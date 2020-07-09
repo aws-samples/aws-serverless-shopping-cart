@@ -28,7 +28,6 @@ def lambda_handler(event, context):
     """
     Handle streams from DynamoDB table
     """
-    logger.debug(event)
 
     records = event["Records"]
     quantity_change_counter = Counter()

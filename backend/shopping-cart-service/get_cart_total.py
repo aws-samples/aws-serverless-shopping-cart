@@ -19,8 +19,6 @@ def lambda_handler(event, context):
     """
     List items in shopping cart.
     """
-    logger.debug(event)
-
     product_id = event["pathParameters"]["product_id"]
     response = table.get_item(
         Key={"pk": f"product#{product_id}", "sk": "totalquantity"}

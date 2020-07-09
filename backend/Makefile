@@ -8,7 +8,7 @@ build:
 
 deploy:  # s3 bucket still needed for layer
 	@echo "Deploying stack $(STACKNAME)-$(TEMPLATE)..."
-	@sam deploy --capabilities CAPABILITY_NAMED_IAM --stack-name $(STACKNAME)-$(TEMPLATE) --s3-bucket $(S3_BUCKET) --parameter-overrides AllowedOrigin=$(ORIGIN) 2>&1 | tee /dev/tty | grep "No changes to deploy" >/dev/null
+	@sam deploy --capabilities CAPABILITY_NAMED_IAM --stack-name $(STACKNAME)-$(TEMPLATE) --s3-bucket $(S3_BUCKET) --parameter-overrides AllowedOrigin=$(ORIGIN) 2>&1 | tee /dev/stderr | grep "No changes to deploy" >/dev/null
 
 tests:
 	py.test -v

@@ -2,8 +2,8 @@ all: backend frontend-build
 
 TEMPLATES = auth product-mock shoppingcart-service
 
-ifndef S3_BUCKET
 REGION := $(shell python3 -c 'import boto3; print(boto3.Session().region_name)')
+ifndef S3_BUCKET
 ACCOUNT_ID := $(shell aws sts get-caller-identity --query Account --output text)
 S3_BUCKET = aws-serverless-shopping-cart-src-$(ACCOUNT_ID)-$(REGION)
 endif
@@ -23,8 +23,8 @@ backend-tests:
 	$(MAKE) -C backend tests
 
 create-bucket:
-	@echo "Creating S3 bucket if it doesn't already exist: s3://$(S3_BUCKET)"
-	$(shell aws s3api head-bucket --bucket ${S3_BUCKET} || aws s3 mb s3://${S3_BUCKET} --region ${REGION})
+	@echo "Checking if S3 bucket exists s3://$(S3_BUCKET)"
+	@aws s3api head-bucket --bucket $(S3_BUCKET) || (echo "bucket does not exist at s3://$(S3_BUCKET), creating it..." ; aws s3 mb s3://$(S3_BUCKET) --region $(REGION))
 
 amplify-deploy: create-bucket
 	aws cloudformation deploy \

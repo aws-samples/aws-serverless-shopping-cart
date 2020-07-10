@@ -6,7 +6,7 @@ To assist in demonstrating the functionality, a bare bones mock "products" servi
 
 ## Architecture & Design
 
-![Architecture Diagram](./architecture.png)
+![Architecture Diagram](./images/architecture.png)
 
 ## Design Notes
 
@@ -75,6 +75,7 @@ SAM CLI, >= version 0.50.0
 AWS CLI  
 yarn  
 
+## Option 1 - Deploy backend and run frontend locally
 ### Deploy the Backend
 
 Clone the project: `git clone <repo-url> && cd <repo-dir>`
@@ -104,6 +105,34 @@ Delete the CloudFormation stacks created by this project:
 ``` bash
 make backend-delete
 ```
+
+## Option 2 - Automatically deploy backend and frontend using Amplify Console
+
+Fork the github repo, then clone your fork locally: `git clone <repo-url> && cd <repo-dir>`
+
+If you wish to use a named profile for your AWS credentials, you can set the environment variable `AWS_PROFILE` before running the below commands. For a profile named "development": `export AWS_PROFILE=development`.  
+
+[Create a new personal access token](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) on GitHub. 
+Amplify will need this to access your repository. The token will need the “repo” OAuth scope.
+
+Set environment variables:
+```bash
+export GITHUB_REPO=https://github.com/<your-github-username>/aws-serverless-shopping-cart
+export GITHUB_BRANCH=master  # Or whichever branch you wish to track
+export GITHUB_OAUTH_TOKEN=<github personal access token>
+```
+
+Create the Amplify console application, which will provide basic continuous deployment for your Github repository.  
+
+``` bash
+make amplify-deploy  # Creates amplify console application
+```
+
+Go to the [AWS Amplify console](https://console.aws.amazon.com/amplify/home), then click on "CartApp" and "run build". 
+This will deploy both the frontend and backend.  
+
+![Amplify Console](./images/AmplifyConsoleScreen.png)
+
 
 ## License
 

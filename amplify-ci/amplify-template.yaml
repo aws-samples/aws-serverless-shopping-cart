@@ -134,6 +134,11 @@ Resources:
       Repository: !Ref Repository
       Description: AWS serverless shopping cart
       OauthToken: !Ref OauthToken
+      CustomRules:
+        -
+          Source: </^[^.]+$|\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|map|json)$)([^.]+$)/>
+          Target: /
+          Status: 200
       EnvironmentVariables:
         - Name: _CUSTOM_IMAGE
           Value: nikolaik/python-nodejs:python3.8-nodejs12

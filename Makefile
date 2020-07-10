@@ -26,7 +26,7 @@ create-bucket:
 	@echo "Checking if S3 bucket exists s3://$(S3_BUCKET)"
 	@aws s3api head-bucket --bucket $(S3_BUCKET) || (echo "bucket does not exist at s3://$(S3_BUCKET), creating it..." ; aws s3 mb s3://$(S3_BUCKET) --region $(REGION))
 
-amplify-deploy: create-bucket
+amplify-deploy:
 	aws cloudformation deploy \
 		--template-file ./amplify-ci/amplify-template.yaml \
 		--capabilities CAPABILITY_IAM \

@@ -1,2 +1,6 @@
 .env.local
 .idea
+node_modules
+package-lock.json
+product_list.json
+yarn.lock

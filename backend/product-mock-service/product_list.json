@@ -1,10 +1,10 @@
 [
     {
-        "category": "fruit",
+        "category": "tops",
         "createdDate": "2017-04-17T01:14:03 -02:00",
-        "description": "Culpa non veniam deserunt dolor irure elit cupidatat culpa consequat nulla irure aliqua.",
+        "description": "Grecian top",
         "modifiedDate": "2019-03-13T12:18:27 -01:00",
-        "name": "packaged strawberries",
+        "name": "grecian top",
         "package": {
             "height": 948,
             "length": 455,

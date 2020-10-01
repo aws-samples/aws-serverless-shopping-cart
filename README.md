@@ -92,7 +92,8 @@ Returns details for a single product.
 
 ### Requirements
 
-python >= 3.8.0  
+python >= 3.8.0
+boto3
 SAM CLI, >= version 0.50.0  
 AWS CLI  
 yarn  

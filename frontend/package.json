@@ -9,7 +9,7 @@
     "fetchConfig": "node scripts/fetchconfig.js"
   },
   "dependencies": {
-    "aws-amplify": "^3.3.14",
+    "aws-amplify": "^1.2.3",
     "aws-amplify-vue": "^0.3.3",
     "core-js": "^3.3.2",
     "decimal.js": "^10.2.0",
@@ -35,7 +35,8 @@
     "vuetify-loader": "^1.3.0"
   },
   "resolutions": {
-    "websocket-extensions": "^0.1.4"
+    "websocket-extensions": "^0.1.4",
+    "axios": "^0.21.1"
   },
   "eslintConfig": {
     "root": true,

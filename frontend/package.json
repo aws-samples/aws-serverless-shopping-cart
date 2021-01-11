@@ -9,7 +9,7 @@
     "fetchConfig": "node scripts/fetchconfig.js"
   },
   "dependencies": {
-    "aws-amplify": "^1.2.3",
+    "aws-amplify": "^3.3.14",
     "aws-amplify-vue": "^0.3.3",
     "core-js": "^3.3.2",
     "decimal.js": "^10.2.0",

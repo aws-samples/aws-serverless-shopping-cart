@@ -38,7 +38,8 @@
     "websocket-extensions": "^0.1.4",
     "axios": "^0.21.1",
     "ssri": "^8.0.1",
-    "is-svg": "^4.2.2"
+    "is-svg": "^4.2.2",
+    "glob-parent": "^5.1.2"
   },
   "eslintConfig": {
     "root": true,

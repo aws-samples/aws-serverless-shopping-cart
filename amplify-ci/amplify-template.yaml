@@ -140,8 +140,6 @@ Resources:
           Target: /
           Status: 200
       EnvironmentVariables:
-        - Name: _CUSTOM_IMAGE
-          Value: nikolaik/python-nodejs:python3.8-nodejs12
         - Name: S3_BUCKET
           Value: !Ref SrcS3Bucket
       Tags:

@@ -2,7 +2,6 @@ import json
 import os
 
 import boto3
-from aws_lambda_powertools import Logger, Metrics, Tracer
 
 from shared import (
     NotFoundException,
@@ -13,18 +12,12 @@ from shared import (
 )
 from utils import get_product_from_external_service
 
-logger = Logger()
-tracer = Tracer()
-metrics = Metrics()
 
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table(os.environ["TABLE_NAME"])
 product_service_url = os.environ["PRODUCT_SERVICE_URL"]
 
 
-@metrics.log_metrics(capture_cold_start_metric=True)
-@logger.inject_lambda_context(log_event=True)
-@tracer.capture_lambda_handler
 def lambda_handler(event, context):
     """
     Add a the provided quantity of a product to a cart. Where an item already exists in the cart, the quantities will
@@ -51,7 +44,6 @@ def lambda_handler(event, context):
 
     try:
         product = get_product_from_external_service(product_id)
-        logger.info("No product found with product_id: %s", product_id)
     except NotFoundException:
         return {
             "statusCode": 404,
@@ -60,13 +52,11 @@ def lambda_handler(event, context):
         }
 
     if user_sub:
-        logger.info("Authenticated user")
         pk = f"user#{user_sub}"
         ttl = generate_ttl(
             7
         )  # Set a longer ttl for logged in users - we want to keep their cart for longer.
     else:
-        logger.info("Unauthenticated user")
         pk = f"cart#{cart_id}"
         ttl = generate_ttl()
 
@@ -103,7 +93,6 @@ def lambda_handler(event, context):
             },
             UpdateExpression="ADD #quantity :val SET #expirationTime = :ttl, #productDetail = :productDetail",
         )
-    metrics.add_metric(name="CartUpdated", unit="Count", value=1)
 
     return {
         "statusCode": 200,

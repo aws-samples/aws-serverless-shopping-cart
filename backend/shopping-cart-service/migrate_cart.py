@@ -3,14 +3,9 @@ import os
 import threading
 
 import boto3
-from aws_lambda_powertools import Logger, Metrics, Tracer
 from boto3.dynamodb.conditions import Key
 
 from shared import generate_ttl, get_cart_id, get_headers, handle_decimal_type
-
-logger = Logger()
-tracer = Tracer()
-metrics = Metrics()
 
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table(os.environ["TABLE_NAME"])
@@ -18,7 +13,6 @@ sqs = boto3.resource("sqs")
 queue = sqs.Queue(os.environ["DELETE_FROM_CART_SQS_QUEUE"])
 
 
-@tracer.capture_method
 def update_item(user_id, item):
     """
     Update an item in the database, adding the quantity of the passed in item to the quantity of any products already
@@ -40,9 +34,6 @@ def update_item(user_id, item):
     )
 
 
-@metrics.log_metrics(capture_cold_start_metric=True)
-@logger.inject_lambda_context(log_event=True)
-@tracer.capture_lambda_handler
 def lambda_handler(event, context):
     """
     Update cart table to use user identifier instead of anonymous cookie value as a key. This will be called when a user
@@ -53,7 +44,6 @@ def lambda_handler(event, context):
     try:
         # Because this method is authorized at API gateway layer, we don't need to validate the JWT claims here
         user_id = event["requestContext"]["authorizer"]["claims"]["sub"]
-        logger.info("Migrating cart_id %s to user_id %s", cart_id, user_id)
     except KeyError:
 
         return {
@@ -88,9 +78,6 @@ def lambda_handler(event, context):
 
     for ddb_thread in thread_list:
         ddb_thread.join()  # Block main thread until all updates finished
-
-    if unauth_cart:
-        metrics.add_metric(name="CartMigrated", unit="Count", value=1)
 
     response = table.query(
         KeyConditionExpression=Key("pk").eq(f"user#{user_id}")

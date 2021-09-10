@@ -2,7 +2,6 @@ import json
 import os
 
 import boto3
-from aws_lambda_powertools import Logger, Metrics, Tracer
 
 from shared import (
     NotFoundException,
@@ -13,18 +12,12 @@ from shared import (
 )
 from utils import get_product_from_external_service
 
-logger = Logger()
-tracer = Tracer()
-metrics = Metrics()
 
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table(os.environ["TABLE_NAME"])
 product_service_url = os.environ["PRODUCT_SERVICE_URL"]
 
 
-@metrics.log_metrics(capture_cold_start_metric=True)
-@logger.inject_lambda_context(log_event=True)
-@tracer.capture_lambda_handler
 def lambda_handler(event, context):
     """
     Idempotent update quantity of products in a cart. Quantity provided will overwrite existing quantity for a
@@ -55,7 +48,6 @@ def lambda_handler(event, context):
     try:
         product = get_product_from_external_service(product_id)
     except NotFoundException:
-        logger.info("No product found with product_id: %s", product_id)
         return {
             "statusCode": 404,
             "headers": get_headers(cart_id=cart_id),
@@ -95,8 +87,6 @@ def lambda_handler(event, context):
             "productDetail": product,
         }
     )
-    logger.info("about to add metrics...")
-    metrics.add_metric(name="CartUpdated", unit="Count", value=1)
 
     return {
         "statusCode": 200,

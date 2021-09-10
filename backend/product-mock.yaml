@@ -19,8 +19,6 @@ Globals:
       Variables:
         LOG_LEVEL: "DEBUG"
         ALLOWED_ORIGIN: !Ref AllowedOrigin
-        POWERTOOLS_SERVICE_NAME: product-mock
-        POWERTOOLS_METRICS_NAMESPACE: ecommerce-app
   Api:
     EndpointConfiguration: REGIONAL
     TracingEnabled: true

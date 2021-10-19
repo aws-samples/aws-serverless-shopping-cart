@@ -168,6 +168,8 @@ This will deploy both the frontend and backend:
 Delete the CloudFormation stacks created by this project. One is named "CartApp", and then there are 3 with names 
 starting with "aws-serverless-shopping-cart-".
 
+[![amplifybutton](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/aws-samples/aws-serverless-shopping-cart)
+
 ## License
 
 This library is licensed under the MIT-0 License. See the [LICENSE](LICENSE) file.  

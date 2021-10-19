@@ -6,12 +6,17 @@ from aws_lambda_powertools import Logger, Metrics, Tracer
 from boto3.dynamodb.conditions import Key
 
 from shared import get_cart_id, get_headers, handle_decimal_type
+import datetime
+import time
 
 logger = Logger()
 tracer = Tracer()
 metrics = Metrics()
 
 dynamodb = boto3.resource("dynamodb")
+pinpoint = boto3.client('pinpoint')
+pinpoint_app_id = 'd8bc2f39610240d2a87774aa074e5fb6'
+pinpoint_address = 'udom@brikl.com'
 
 logger.debug("Initializing DDB Table %s", os.environ["TABLE_NAME"])
 table = dynamodb.Table(os.environ["TABLE_NAME"])
@@ -54,6 +59,33 @@ def lambda_handler(event, context):
 
     metrics.add_metric(name="CartCheckedOut", unit="Count", value=1)
     logger.info({"action": "CartCheckedOut", "cartItems": cart_items})
+
+    pinpoint.put_events(
+        ApplicationId = pinpoint_app_id,
+        EventsRequest={
+            'BatchItem': {
+                user_id: {
+                    'Endpoint': {
+                        'ChannelType': 'EMAIL',
+                        'Address': pinpoint_address,
+                        'Attributes': {
+                            'Cart': ['Hat'],
+                            'Purchased': ['Yes']
+                        }
+                    },
+                    'Events':{
+                        'cart-event-2': {
+                            'Attributes':{
+                                'Purchased': 'Yes'
+                            },
+                            'EventType': 'CartPurchasedEvent',
+                            'Timestamp': datetime.datetime.fromtimestamp(time.time()).isoformat()
+                        }
+                    }
+                }
+            } 
+        }
+    )
 
     return {
         "statusCode": 200,

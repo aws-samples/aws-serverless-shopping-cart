@@ -25,6 +25,8 @@ Globals:
     Tracing: Active
     AutoPublishAlias: live
     Runtime: python3.8
+    Layers:
+      - !Sub arn:aws:lambda:${AWS::Region}:017000801446:layer:AWSLambdaPowertoolsPython:3
     Environment:
       Variables:
         TABLE_NAME: !Ref DynamoDBShoppingCartTable

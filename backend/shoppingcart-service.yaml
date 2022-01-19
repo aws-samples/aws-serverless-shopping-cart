@@ -32,6 +32,8 @@ Globals:
         ALLOWED_ORIGIN: !Ref AllowedOrigin
         POWERTOOLS_SERVICE_NAME: shopping-cart
         POWERTOOLS_METRICS_NAMESPACE: ecommerce-app
+        POWERTOOLS_LOGGER_SAMPLE_RATE: 0.5
+
   Api:
     EndpointConfiguration: REGIONAL
     TracingEnabled: true

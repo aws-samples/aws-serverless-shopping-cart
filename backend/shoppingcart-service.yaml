@@ -97,7 +97,7 @@ Resources:
             Effect: "Allow"
             Principal:
               Service:
-                - "lambda.amazonaws.com"
+                - "*"
 
   LambdaLoggingPolicy:
     Type: "AWS::IAM::Policy"

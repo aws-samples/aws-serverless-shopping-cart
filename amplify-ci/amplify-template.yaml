@@ -66,6 +66,12 @@ Resources:
               -
                 Effect: Allow
                 Action:
+                  - lambda:GetLayerVersion
+                Resource:
+                  - !Sub "arn:aws:lambda:${AWS::Region}:017000801446:layer:AWSLambdaPowertoolsPython*"
+              -
+                Effect: Allow
+                Action:
                   - lambda:*EventSourceMapping
                 Resource: 
                   - "*"

@@ -157,8 +157,7 @@ make backend-delete
 
 
 ### Clean Up
-Delete the CloudFormation stacks created by this project. One is named "CartApp", and then there are 3 with names 
-starting with "aws-serverless-shopping-cart-".
+Delete the CloudFormation stacks created by this project. There are 3 of them, with names starting with "aws-serverless-shopping-cart-".
 
 ## License
 

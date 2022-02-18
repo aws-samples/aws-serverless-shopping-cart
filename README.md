@@ -144,25 +144,17 @@ make backend-delete
 ## Option 2 - Automatically deploy backend and frontend using Amplify Console
 
 
-[Create a new personal access token](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) 
-on GitHub. 
-Amplify will need this to access your repository. The token will need the “repo” OAuth scope.
+[![One-click deployment](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/aws-samples/aws-serverless-shopping-cart)
 
-Set environment variables:
-```bash
-export GITHUB_REPO=https://github.com/<your-github-username>/aws-serverless-shopping-cart
-export GITHUB_BRANCH=master  # Or whichever branch you wish to track
-export GITHUB_OAUTH_TOKEN=<github personal access token>
-```
+1) Use **1-click deployment** button above, and continue by clicking "Connect to Github"
+2) If you don't have an IAM Service Role with admin permissions, select "Create new role". Otherwise proceed to step 5) 
+3) Select "Amplify" from the drop-down, and select "Amplify - Backend Deployment", then click "Next".
+4) Click "Next" again, then give the role a name and click "Create role"
+5) In the Amplify console and select the role you created, then click "Save and deploy"
+6) Amplify Console will fork this repository into your GitHub account and deploy it for you
+7) You should now be able to see your app being deployed in the [Amplify Console](https://console.aws.amazon.com/amplify/home)
+8) Within your new app in Amplify Console, wait for deployment to complete (this should take approximately 12 minutes for the first deploy)
 
-Create the Amplify console application, which will provide basic continuous deployment for your Github repository: 
-``` bash
-make amplify-deploy  # Creates amplify console application
-```
-
-Go to the [AWS Amplify console](https://console.aws.amazon.com/amplify/home), then click on "CartApp" and "run build". 
-This will deploy both the frontend and backend:
-![Amplify Console](./images/AmplifyConsoleScreen.png)
 
 ### Clean Up
 Delete the CloudFormation stacks created by this project. One is named "CartApp", and then there are 3 with names 

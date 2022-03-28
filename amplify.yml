@@ -7,7 +7,9 @@ backend:
   phases:
     preBuild:
       commands:
-        - pip3 install --upgrade aws-sam-cli
+        - curl "https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip" -o "aws-sam-cli.zip"
+        - unzip aws-sam-cli.zip -d sam-installation
+        - ./sam-installation/install
     build:
       commands:
         - make backend

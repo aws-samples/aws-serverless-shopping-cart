@@ -1,5 +1,10 @@
 # Serverless Shopping Cart Microservice
 
+
+curl "https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip" -L -o "aws-sam-cli.zip"
+unzip aws-sam-cli.zip -d sam-installation
+./sam-installation/install
+pip3 install -U boto3
 This application is a sample application to demonstrate how you could implement a shopping cart microservice using 
 serverless technologies on AWS. The backend is built as a REST API interface, making use of [Amazon API Gateway](https://aws.amazon.com/api-gateway/), [AWS Lambda](https://aws.amazon.com/lambda/), [Amazon Cognito](https://aws.amazon.com/cognito/), and [Amazon DynamoDB](https://aws.amazon.com/dynamodb/). The frontend is a Vue.js application using the [AWS Amplify](https://aws-amplify.github.io/) SDK for authentication and communication with the API.
 

@@ -4,7 +4,7 @@
       <v-toolbar-title>
         <router-link tag="div" to="/">
           <a class="accent--text header font-weight-black">
-            DEMO
+            ANYCOMPANY
             <span class="font-weight-thin subheading secondary--text">Store</span>
           </a>
         </router-link>

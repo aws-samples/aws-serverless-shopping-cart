@@ -47,10 +47,10 @@ def lambda_handler(event, context):
 
     cart_items = response.get("Items")
     # batch_writer will be used to update status for cart entries belonging to the user
-    with table.batch_writer() as batch:
-        for item in cart_items:
+    #with table.batch_writer() as batch:
+     #   for item in cart_items:
             # Delete ordered items
-            batch.delete_item(Key={"pk": item["pk"], "sk": item["sk"]})
+      #      batch.delete_item(Key={"pk": item["pk"], "sk": item["sk"]})
 
     metrics.add_metric(name="CartCheckedOut", unit="Count", value=1)
     logger.info({"action": "CartCheckedOut", "cartItems": cart_items})

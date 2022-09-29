@@ -12,8 +12,8 @@
     </v-row>
     <v-card-text class="pt-0 pl-4 pb-0">
       <p class="pt-0 pb-0 mb-0 body-2">"{{product.description}}"</p>
-      <!---<img src=" {{product.pictures[0]}}"/>-->
-      <img src="https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"/>
+      <img src=" {{product.pictures}}"/>
+      
     
       <p class="price pt-0 pb-0 grow accent--text mb-1">${{getPrice(product)}}</p>
     </v-card-text>

@@ -13,6 +13,7 @@
         },
         "pictures": [
             "http://placehold.it/32x32"
+            
         ],
         "price": 716,
         "productId": "4c1fadaa-213a-4ea8-aa32-58c217604e3c",
@@ -138,6 +139,7 @@
         },
         "pictures": [
             "http://placehold.it/32x32"
+
         ],
         "price": 51,
         "productId": "12929eb9-3eb7-4217-99e4-1a39c39217b6",
@@ -462,7 +464,8 @@
             "width": 44
         },
         "pictures": [
-            "http://placehold.it/32x32"
+            "http://placehold.it/32x32/s3accesspoint-p9zub7jz5f7568xadsneagb16eokeusw2a-s3alias/LED_streetlight"
+            
         ],
         "price": 583,
         "productId": "de979b05-9d71-4c7e-b10f-636332ccb6c1",
@@ -475,7 +478,7 @@
         ]
     },
     {
-        "category": "Apparel& Merchandise",
+        "category": "Apparel&Merchandise",
         "createdDate": "2017-05-14T03:39:21 -02:00",
         "description": "In our opinion, the most comfortable wardrobe items of all time are humble hoodies and sweatshirts. .",
         "modifiedDate": "2019-11-24T02:23:27 -01:00",

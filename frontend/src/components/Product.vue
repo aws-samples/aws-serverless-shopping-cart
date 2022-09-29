@@ -12,7 +12,7 @@
     </v-row>
     <v-card-text class="pt-0 pl-4 pb-0">
       <p class="pt-0 pb-0 mb-0 body-2">"{{product.description}}"</p>
-      <img src="{{product.pictures}}"/>
+      <img :src="getimage(product)" :v-bind:alt="pic"/>
       <p>{{product.pictures}}</p>
       
     
@@ -50,6 +50,10 @@ export default {
       } else {
         return 0;
       }
+    },
+    getimage(product)
+    {
+      return product.pictures;
     },
     addProductToCart(product) {
       this.$store.dispatch("addToCart", product);

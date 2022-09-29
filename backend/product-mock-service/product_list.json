@@ -11,10 +11,10 @@
             "weight": 54,
             "width": 905
         },
-        "pictures": [
+        "pictures":
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
             
-        ],
+        ,
         "price": 716,
         "productId": "4c1fadaa-213a-4ea8-aa32-58c217604e3c",
         "tags": [
@@ -37,9 +37,9 @@
             "weight": 293,
             "width": 741
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
-        ],
+        ,
         "price": 35,
         "productId": "d2580eff-d105-45a5-9b21-ba61995bc6da",
         "tags": [
@@ -62,9 +62,9 @@
             "weight": 41,
             "width": 487
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
-        ],
+        ,
         "price": 2,
         "productId": "a6dd7187-40b6-4cb5-b73c-aecd655c6d9a",
         "tags": [
@@ -87,9 +87,9 @@
             "weight": 607,
             "width": 129
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
-        ],
+        ,
         "price": 97,
         "productId": "c0fbcc6b-7a70-41ac-aac4-f8fd237dc62e",
         "tags": [
@@ -112,9 +112,9 @@
             "weight": 66,
             "width": 431
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
-        ],
+        ,
         "price": 144,
         "productId": "cb40c919-033a-47d6-8d00-1d73e2df20fe",
         "tags": [
@@ -137,10 +137,10 @@
             "weight": 457,
             "width": 436
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
 
-        ],
+        ,
         "price": 51,
         "productId": "12929eb9-3eb7-4217-99e4-1a39c39217b6",
         "tags": [
@@ -163,9 +163,9 @@
             "weight": 491,
             "width": 549
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
-        ],
+        ,
         "price": 894,
         "productId": "9fd9ef32-493f-4188-99f5-3aa809aa4fa9",
         "tags": [
@@ -188,9 +188,9 @@
             "weight": 817,
             "width": 964
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
-        ],
+        ,
         "price": 452,
         "productId": "20db6331-1084-48ff-8c4f-c1d98a6a1aa4",
         "tags": [
@@ -213,9 +213,9 @@
             "weight": 336,
             "width": 1
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
-        ],
+        ,
         "price": 322,
         "productId": "8c843a54-27d7-477c-81b3-c21db12ed1c9",
         "tags": [
@@ -238,9 +238,9 @@
             "weight": 85,
             "width": 821
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
-        ],
+        ,
         "price": 163,
         "productId": "8d2024c0-6c05-4691-a0ff-dd52959bd1df",
         "tags": [
@@ -263,9 +263,9 @@
             "weight": 146,
             "width": 694
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
-        ],
+        ,
         "price": 634,
         "productId": "867ecb2b-ef08-446e-8360-b63f60969e3d",
         "tags": [
@@ -288,9 +288,9 @@
             "weight": 775,
             "width": 31
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
-        ],
+        ,
         "price": 77,
         "productId": "684011fc-ecfd-4557-a6df-9fc977365826",
         "tags": [
@@ -313,9 +313,9 @@
             "weight": 47,
             "width": 846
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
-        ],
+        ,
         "price": 805,
         "productId": "b027697d-a070-4c8f-8b9a-b8c80b2eb0ba",
         "tags": [
@@ -338,9 +338,9 @@
             "weight": 661,
             "width": 694
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
-        ],
+        ,
         "price": 283,
         "productId": "7e0dbfa9-a672-4987-a26c-f601d177463a",
         "tags": [
@@ -363,9 +363,9 @@
             "weight": 18,
             "width": 962
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
-        ],
+        ,
         "price": 646,
         "productId": "d1d527b8-9cef-4e97-a873-22236f3ee289",
         "tags": [
@@ -388,9 +388,9 @@
             "weight": 653,
             "width": 367
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
-        ],
+        ,
         "price": 197,
         "productId": "11663d33-e54d-49da-ba6f-44d016ecde7e",
         "tags": [
@@ -413,9 +413,9 @@
             "weight": 354,
             "width": 953
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
-        ],
+        ,
         "price": 728,
         "productId": "e173d669-b449-4226-af2e-128142abdd30",
         "tags": [
@@ -438,9 +438,9 @@
             "weight": 535,
             "width": 646
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
-        ],
+        ,
         "price": 164,
         "productId": "2a5b681c-ec7f-4bd4-a51e-57a5b6591f7f",
         "tags": [
@@ -463,10 +463,10 @@
             "weight": 723,
             "width": 44
         },
-        "pictures": [
+        "pictures": 
             "http://placehold.it/32x32/s3accesspoint-p9zub7jz5f7568xadsneagb16eokeusw2a-s3alias/LED_streetlight"
             
-        ],
+        ,
         "price": 583,
         "productId": "de979b05-9d71-4c7e-b10f-636332ccb6c1",
         "tags": [
@@ -489,9 +489,9 @@
             "weight": 439,
             "width": 747
         },
-        "pictures": [
+        "pictures": 
             "https://d18mx5gr4fiw2a.cloudfront.net/LED_streetlight.png"
-        ],
+        ,
         "price": 996,
         "productId": "aa91060a-3601-4cb8-a2cc-025d09c7a9b7",
         "tags": [

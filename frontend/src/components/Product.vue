@@ -12,7 +12,7 @@
     </v-row>
     <v-card-text class="pt-0 pl-4 pb-0">
       <p class="pt-0 pb-0 mb-0 body-2">"{{product.description}}"</p>
-      <img :src="getimage(product)" :v-bind:alt="pic"/>
+      <img :src="getimage(product)" :v-bind:alt="pic" width="400" height="400"/>
       <p>{{product.pictures}}</p>
       
     

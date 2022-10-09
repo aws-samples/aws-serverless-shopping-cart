@@ -10,6 +10,7 @@
         </router-link>
       </v-toolbar-title>
       <v-toolbar-items>
+        <ejs-button cssClass='e-link' v-on:click.native='btnClick'>Button</ejs-button>
         <v-btn to="/auth" v-if="!currentUser" text class="ml-2">Sign In</v-btn>
         <cart-button @drawerChange="toggleDrawer" />
         <div class="sign-out">
@@ -41,6 +42,12 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
+import Vue from 'vue';
+import { ButtonPlugin } from '@syncfusion/ej2-vue-buttons';
+import { enableRipple } from '@syncfusion/ej2-base';
+
+enableRipple(true);
+Vue.use(ButtonPlugin);
 
 export default {
   name: "app",
@@ -62,7 +69,10 @@ export default {
     },
     toggleDrawer() {
       this.drawer = !this.drawer;
-    }
+    },
+    btnClick: function(event) {
+            window.open("https://www.google.com");
+        }
   }
 };
 </script>
@@ -77,5 +87,12 @@ export default {
 :root {
   /* Colors */
   --amazonOrange: #e88b01 !important;
+}
+
+@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+
+button {
+  margin: 25px 5px 20px 20px;
 }
 </style>

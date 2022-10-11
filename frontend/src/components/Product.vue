@@ -12,6 +12,10 @@
     </v-row>
     <v-card-text class="pt-0 pl-4 pb-0">
       <p class="pt-0 pb-0 mb-0 body-2">"{{product.description}}"</p>
+      <img :src="getimage(product)" :v-bind:alt="pic" Style="width:400px; height:400px"/>
+      <p>{{product.pictures}}</p>
+      
+    
       <p class="price pt-0 pb-0 grow accent--text mb-1">${{getPrice(product)}}</p>
     </v-card-text>
     <v-card-actions class="card-actions pa-0 ml-3 mb-2 mt-2 justify-center">
@@ -46,6 +50,10 @@ export default {
       } else {
         return 0;
       }
+    },
+    getimage(product)
+    {
+      return product.pictures;
     },
     addProductToCart(product) {
       this.$store.dispatch("addToCart", product);

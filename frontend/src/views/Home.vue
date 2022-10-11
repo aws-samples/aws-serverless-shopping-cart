@@ -3,6 +3,7 @@
       <v-layout row wrap>
         <v-flex v-for="product in products" :key="product.productId" xs12 lg4 sm6>
             <product :product="product" :key="product.productId" />
+            
         </v-flex>
       </v-layout>
     </v-container>

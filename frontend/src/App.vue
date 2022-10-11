@@ -4,12 +4,13 @@
       <v-toolbar-title>
         <router-link tag="div" to="/">
           <a class="accent--text header font-weight-black">
-            DEMO
+            ANYCOMPANY_LED
             <span class="font-weight-thin subheading secondary--text">Store</span>
           </a>
         </router-link>
       </v-toolbar-title>
       <v-toolbar-items>
+
         <v-btn to="/auth" v-if="!currentUser" text class="ml-2">Sign In</v-btn>
         <cart-button @drawerChange="toggleDrawer" />
         <div class="sign-out">
@@ -62,7 +63,7 @@ export default {
     },
     toggleDrawer() {
       this.drawer = !this.drawer;
-    }
+    } 
   }
 };
 </script>

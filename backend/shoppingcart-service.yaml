@@ -21,7 +21,7 @@ Parameters:
 Globals:
   Function:
     Timeout: 5
-    MemorySize: 512
+    MemorySize: 2048
     Tracing: Active
     AutoPublishAlias: live
     Runtime: python3.8

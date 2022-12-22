@@ -14,7 +14,7 @@ Globals:
     Tracing: Active
     AutoPublishAlias: live
     Runtime: python3.8
-    MemorySize: 256
+    MemorySize: 2048
     Environment:
       Variables:
         LOG_LEVEL: "DEBUG"

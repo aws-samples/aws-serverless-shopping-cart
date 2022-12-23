@@ -17,6 +17,21 @@ Parameters:
     Default: '/serverless-shopping-cart-demo/products/products-api-url'
   AllowedOrigin:
     Type: 'String'
+  AwsLambdaExecWrapper:
+    Type: String
+  DtOneAgentLambdaARN:
+    Type: String
+  DtTenant:
+    Type: String
+  DtClusterId:
+    Type: String
+  DtConnectionBaseUrl:
+    Type: String
+  DtConnectionAuthToken:
+    Type: String
+  DtOpenTelemetryEnableIntegration:
+    Type: String
+    Default: 'true'
 
 Globals:
   Function:
@@ -27,6 +42,7 @@ Globals:
     Runtime: python3.8
     Layers:
       - !Sub arn:aws:lambda:${AWS::Region}:017000801446:layer:AWSLambdaPowertoolsPython:3
+      - !Ref DtOneAgentLambdaARN
     Environment:
       Variables:
         TABLE_NAME: !Ref DynamoDBShoppingCartTable
@@ -34,13 +50,19 @@ Globals:
         ALLOWED_ORIGIN: !Ref AllowedOrigin
         POWERTOOLS_SERVICE_NAME: shopping-cart
         POWERTOOLS_METRICS_NAMESPACE: ecommerce-app
+        AWS_LAMBDA_EXEC_WRAPPER: !Ref AwsLambdaExecWrapper
+        DT_TENANT: !Ref DtTenant
+        DT_CLUSTER_ID: !Ref DtClusterId
+        DT_CONNECTION_BASE_URL: !Ref DtConnectionBaseUrl
+        DT_CONNECTION_AUTH_TOKEN: !Ref DtConnectionAuthToken
+        DT_OPEN_TELEMETRY_ENABLE_INTEGRATION: !Ref DtOpenTelemetryEnableIntegration
   Api:
     EndpointConfiguration: REGIONAL
     TracingEnabled: true
     OpenApiVersion: '2.0'
     Cors:
       AllowMethods: "'OPTIONS,POST,GET,PUT'"
-      AllowHeaders: "'Content-Type,Authorization'"
+      AllowHeaders: "'Content-Type,Authorization,x-dynatrace,traceparent,tracestate,x-dtc,referer,host,x-forwarded-proto,x-forwarded-for,x-forwarded-port'"
       AllowCredentials: true
       AllowOrigin: !Sub "'${AllowedOrigin}'"
 

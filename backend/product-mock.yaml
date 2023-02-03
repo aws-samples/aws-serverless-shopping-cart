@@ -7,7 +7,7 @@ Description: >
 Parameters:
   AllowedOrigin:
     Type: 'String'
-  AwsLambdaExecWrapper:
+  DtAwsLambdaExecWrapper:
     Type: String
   DtOneAgentLambdaARN:
     Type: String

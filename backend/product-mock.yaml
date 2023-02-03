@@ -7,6 +7,21 @@ Description: >
 Parameters:
   AllowedOrigin:
     Type: 'String'
+  AwsLambdaExecWrapper:
+    Type: String
+  DtOneAgentLambdaARN:
+    Type: String
+  DtTenant:
+    Type: String
+  DtClusterId:
+    Type: String
+  DtConnectionBaseUrl:
+    Type: String
+  DtConnectionAuthToken:
+    Type: String
+  DtOpenTelemetryEnableIntegration:
+    Type: String
+    Default: 'true'
 
 Globals:
   Function:
@@ -14,20 +29,30 @@ Globals:
     Tracing: Active
     AutoPublishAlias: live
     Runtime: python3.8
-    MemorySize: 256
+    Layers:
+      - !Ref DtOneAgentLambdaARN
+    MemorySize: 2048
     Environment:
       Variables:
         LOG_LEVEL: "DEBUG"
         ALLOWED_ORIGIN: !Ref AllowedOrigin
         POWERTOOLS_SERVICE_NAME: product-mock
         POWERTOOLS_METRICS_NAMESPACE: ecommerce-app
+        # Dynatrace parameters
+        AWS_LAMBDA_EXEC_WRAPPER: !Ref AwsLambdaExecWrapper
+        DT_TENANT: !Ref DtTenant
+        DT_CLUSTER_ID: !Ref DtClusterId
+        DT_CONNECTION_BASE_URL: !Ref DtConnectionBaseUrl
+        DT_CONNECTION_AUTH_TOKEN: !Ref DtConnectionAuthToken
+        DT_OPEN_TELEMETRY_ENABLE_INTEGRATION: !Ref DtOpenTelemetryEnableIntegration
   Api:
     EndpointConfiguration: REGIONAL
     TracingEnabled: true
     OpenApiVersion: '2.0'
     Cors:
       AllowMethods: "'OPTIONS,POST,GET'"
-      AllowHeaders: "'Content-Type'"
+      # Additional Dynatrace headers
+      AllowHeaders: "'Content-Type,Authorization,x-dynatrace,traceparent,tracestate,x-dtc,referer,host,x-forwarded-proto,x-forwarded-for,x-forwarded-port'"
       AllowOrigin: !Sub "'${AllowedOrigin}'"
 
 Resources:

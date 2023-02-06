@@ -7,21 +7,6 @@ Description: >
 Parameters:
   AllowedOrigin:
     Type: 'String'
-  DtAwsLambdaExecWrapper:
-    Type: String
-  DtOneAgentLambdaARN:
-    Type: String
-  DtTenant:
-    Type: String
-  DtClusterId:
-    Type: String
-  DtConnectionBaseUrl:
-    Type: String
-  DtConnectionAuthToken:
-    Type: String
-  DtOpenTelemetryEnableIntegration:
-    Type: String
-    Default: 'true'
 
 Globals:
   Function:
@@ -39,12 +24,12 @@ Globals:
         POWERTOOLS_SERVICE_NAME: product-mock
         POWERTOOLS_METRICS_NAMESPACE: ecommerce-app
         # Dynatrace parameters
-        AWS_LAMBDA_EXEC_WRAPPER: !Ref AwsLambdaExecWrapper
-        DT_TENANT: !Ref DtTenant
-        DT_CLUSTER_ID: !Ref DtClusterId
-        DT_CONNECTION_BASE_URL: !Ref DtConnectionBaseUrl
-        DT_CONNECTION_AUTH_TOKEN: !Ref DtConnectionAuthToken
-        DT_OPEN_TELEMETRY_ENABLE_INTEGRATION: !Ref DtOpenTelemetryEnableIntegration
+        AWS_LAMBDA_EXEC_WRAPPER: !ImportValue ${AWS::StackName}-DtAwsLambdaExecWrapperSSM
+        DT_TENANT: !ImportValue ${AWS::StackName}-DtTenantSSM
+        DT_CLUSTER_ID: !ImportValue ${AWS::StackName}-DtClusterIdSSM
+        DT_CONNECTION_BASE_URL: !ImportValue ${AWS::StackName}-DtConnectionBaseUrlSSM
+        DT_CONNECTION_AUTH_TOKEN: !ImportValue ${AWS::StackName}-DtConnectionAuthTokenSSM
+        DT_OPEN_TELEMETRY_ENABLE_INTEGRATION: !ImportValue ${AWS::StackName}-DtOpenTelemetryEnableIntegrationSSM
   Api:
     EndpointConfiguration: REGIONAL
     TracingEnabled: true

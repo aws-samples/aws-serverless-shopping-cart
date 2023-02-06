@@ -350,7 +350,7 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: delete_from_cart.lambda_handler
-      #ReservedConcurrentExecutions: 10  # Keep the ddb spikes down in case of many deletes at once
+      ReservedConcurrentExecutions: 2  # Keep the ddb spikes down in case of many deletes at once
       Policies:
         - SQSPollerPolicy:
             QueueName:

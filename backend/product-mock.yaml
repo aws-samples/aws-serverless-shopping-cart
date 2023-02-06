@@ -29,7 +29,7 @@ Parameters:
     Default: '/dt/ConnectionAuthToken'
   DtOpenTelemetryEnableIntegrationSSM:
     Type: 'AWS::SSM::Parameter::Value<String>'
-    Default: '/dt/OpenTelemetryEnableIntegrationr'
+    Default: '/dt/OpenTelemetryEnableIntegration'
 
 Globals:
   Function:

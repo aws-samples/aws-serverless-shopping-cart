@@ -29,7 +29,7 @@ Parameters:
     Default: '/dt/Tenant'
   DtClusterIdSSM:
     Type: 'AWS::SSM::Parameter::Value<String>'
-    Default: '/dt/LambdaExecWrapper'
+    Default: '/dt/dtClusterId'
   DtConnectionBaseUrlSSM:
     Type: 'AWS::SSM::Parameter::Value<String>'
     Default: '/dt/ConnectionBaseUrl'

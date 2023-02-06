@@ -15,7 +15,7 @@ Globals:
     AutoPublishAlias: live
     Runtime: python3.8
     Layers:
-      - !Ref DtOneAgentLambdaARN
+      - !ImportValue ${AWS::StackName}-DtOneAgentLambdaARNSSM
     MemorySize: 2048
     Environment:
       Variables:

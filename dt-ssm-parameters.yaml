@@ -1,0 +1,120 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  DtAwsLambdaExecWrapperSSMParameter:
+    Type: String
+    Description: Typically /opt/dynatrace. Refer Install OneAgent for Lambda in the Deploy Dynatrace section.
+    Default: '/opt/dynatrace'
+  DtOneAgentLambdaARNSSMParameter:
+    Type: String
+    Description: The Lambda ARN provided by Dynatrace. Refer Install OneAgent for Lambda in the Deploy Dynatrace section.
+    Default: 'arn:aws:lambda:ap-southeast-2:725887861453:layer:Dynatrace_OneAgent_1_257_1_20221202-040724_python:1'
+  DtTenantSSMParameter:
+    Type: String
+    Description: Enter the dynatrace tenantId, usually in the format of abc123456. Refer Install OneAgent for Lambda in the Deploy Dynatrace section.
+    Default: 'gkp23840'
+  DtClusterIdSSMParameter:
+    Type: String
+    Description: Enter the clusterId provided by Dynatrace.E.g. 123456 or -123456. Refer Install OneAgent for Lambda in the Deploy Dynatrace section.
+    Default: '-127324864'
+  DtConnectionBaseUrlSSMParameter:
+    Type: String
+    Description: Enter the Dynatrace URL https://<tenantid>.live.dynatrace.com
+    Default: 'https://xxxxxxxx.live.dynatrace.com'
+  DtConnectionAuthTokenSSMParameter:
+    Type: String
+    Description: Enter the Token provided by Dynatrace. Refer Install OneAgent for Lambda in the Deploy Dynatrace section.  
+    Default: 'dt0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+  DtOpenTelemetryEnableIntegrationSSMParameter:
+    Description: Select True Refer Install OneAgent for Lambda in the Deploy Dynatrace section.  
+    Type: String
+    Default: 'true'
+
+Resources:
+  DtAwsLambdaExecWrapperSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Description: Parameter for DtAwsLambdaExecWrapper
+      Name: /dt/LambdaExecWrapper 
+      Value:
+        Ref: DtAwsLambdaExecWrapperSSMParameter
+  DtOneAgentLambdaARNSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Description: Parameter for DtOneAgentLambdaARN
+      Name: /dt/OneAgentLambdaARN
+      Value: 
+        Ref: DtOneAgentLambdaARNSSMParameter
+  DtTenantSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Name: /dt/Tenant
+      Description: Parameter for DtTenant
+      Value:
+        Ref: DtTenantSSMParameter
+  DtClusterIdSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Name: /dt/dtClusterId
+      Description: Parameter for DtClusterId
+      Value: 
+        Ref: DtClusterIdSSMParameter
+  DtConnectionBaseUrlSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Name: /dt/ConnectionBaseUrl
+      Description: Parameter for DtConnectionBaseUrl
+      Value: 
+        Ref: DtConnectionBaseUrlSSMParameter
+  DtConnectionAuthTokenSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Name: /dt/ConnectionAuthToken
+      Description: Parameter for DtConnectionAuthToken
+      Value: 
+        Ref: DtConnectionAuthTokenSSMParameter
+  DtOpenTelemetryEnableIntegrationSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Name: /dt/OpenTelemetryEnableIntegration
+      Description: Parameter for DtOpenTelemetryEnableIntegration
+      Value: 
+        Ref: DtOpenTelemetryEnableIntegrationSSMParameter
+
+Outputs:
+  DtAwsLambdaExecWrapperSSMParameterName:
+    Value: !Ref DtAwsLambdaExecWrapperSSM
+    Export:
+      Name: !Sub "${AWS::StackName}-DtAwsLambdaExecWrapperSSM"
+  DtOneAgentLambdaARNSSMParameterName:
+    Value: !Ref DtOneAgentLambdaARNSSM
+    Export:
+      Name: !Sub "${AWS::StackName}-DtOneAgentLambdaARNSSM"
+  DtTenantSSMParameterName:
+    Value: !Ref DtTenantSSM
+    Export:
+      Name: !Sub "${AWS::StackName}-DtTenantSSM"
+  DtClusterIdSSMParameterName:
+    Value: !Ref DtClusterIdSSM
+    Export:
+      Name: !Sub "${AWS::StackName}-DtClusterIdSSM"
+  DtConnectionBaseUrlSSMParameterName:
+    Value: !Ref DtConnectionBaseUrlSSM
+    Export:
+      Name: !Sub "${AWS::StackName}-DtConnectionBaseUrlSSM"
+  DtConnectionAuthTokenSSMParameterName:
+    Value: !Ref DtConnectionAuthTokenSSM
+    Export:
+      Name: !Sub "${AWS::StackName}-DtConnectionAuthTokenSSM"
+  DtOpenTelemetryEnableIntegrationSSMParameterName:
+    Value: !Ref DtOpenTelemetryEnableIntegrationSSM
+    Export:
+      Name: !Sub "${AWS::StackName}-DtOpenTelemetryEnableIntegrationSSM"

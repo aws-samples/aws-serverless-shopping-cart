@@ -17,28 +17,29 @@ Parameters:
     Default: '/serverless-shopping-cart-demo/products/products-api-url'
   AllowedOrigin:
     Type: 'String'
+
   #Dynatrace SSM Parameters  
-  DtOneAgentLambdaARNSSM:
-    Type: 'AWS::SSM::Parameter::Value<String>'
-    Default: '/dt/OneAgentLambdaARN'
-  DtAwsLambdaExecWrapperSSM:
-    Type: 'AWS::SSM::Parameter::Value<String>'
-    Default: '/dt/LambdaExecWrapper'
-  DtTenantSSM:
-    Type: 'AWS::SSM::Parameter::Value<String>'
-    Default: '/dt/Tenant'
-  DtClusterIdSSM:
-    Type: 'AWS::SSM::Parameter::Value<String>'
-    Default: '/dt/dtClusterId'
-  DtConnectionBaseUrlSSM:
-    Type: 'AWS::SSM::Parameter::Value<String>'
-    Default: '/dt/ConnectionBaseUrl'
-  DtConnectionAuthTokenSSM:
-    Type: 'AWS::SSM::Parameter::Value<String>'
-    Default: '/dt/ConnectionAuthToken'
-  DtOpenTelemetryEnableIntegrationSSM:
-    Type: 'AWS::SSM::Parameter::Value<String>'
-    Default: '/dt/OpenTelemetryEnableIntegration'
+  # DtOneAgentLambdaARNSSM:
+  #   Type: 'AWS::SSM::Parameter::Value<String>'
+  #   Default: '/dt/OneAgentLambdaARN'
+  # DtAwsLambdaExecWrapperSSM:
+  #   Type: 'AWS::SSM::Parameter::Value<String>'
+  #   Default: '/dt/LambdaExecWrapper'
+  # DtTenantSSM:
+  #   Type: 'AWS::SSM::Parameter::Value<String>'
+  #   Default: '/dt/Tenant'
+  # DtClusterIdSSM:
+  #   Type: 'AWS::SSM::Parameter::Value<String>'
+  #   Default: '/dt/dtClusterId'
+  # DtConnectionBaseUrlSSM:
+  #   Type: 'AWS::SSM::Parameter::Value<String>'
+  #   Default: '/dt/ConnectionBaseUrl'
+  # DtConnectionAuthTokenSSM:
+  #   Type: 'AWS::SSM::Parameter::Value<String>'
+  #   Default: '/dt/ConnectionAuthToken'
+  # DtOpenTelemetryEnableIntegrationSSM:
+  #   Type: 'AWS::SSM::Parameter::Value<String>'
+  #   Default: '/dt/OpenTelemetryEnableIntegration'
 
 Globals:
   Function:
@@ -48,7 +49,7 @@ Globals:
     AutoPublishAlias: live
     Runtime: python3.8
     Layers:
-      - !Sub arn:aws:lambda:${AWS::Region}:017000801446:layer:AWSLambdaPowertoolsPython:3
+      # - !Sub arn:aws:lambda:${AWS::Region}:017000801446:layer:AWSLambdaPowertoolsPython:3
       - !Ref DtOneAgentLambdaARNSSM
     Environment:
       Variables:
@@ -57,13 +58,14 @@ Globals:
         ALLOWED_ORIGIN: !Ref AllowedOrigin
         POWERTOOLS_SERVICE_NAME: shopping-cart
         POWERTOOLS_METRICS_NAMESPACE: ecommerce-app
+
         # Dynatrace parameters
-        AWS_LAMBDA_EXEC_WRAPPER: !Ref DtAwsLambdaExecWrapperSSM
-        DT_TENANT: !Ref DtTenantSSM
-        DT_CLUSTER_ID: !Ref DtClusterIdSSM
-        DT_CONNECTION_BASE_URL: !Ref DtConnectionBaseUrlSSM
-        DT_CONNECTION_AUTH_TOKEN: !Ref DtConnectionAuthTokenSSM
-        DT_OPEN_TELEMETRY_ENABLE_INTEGRATION: !Ref DtOpenTelemetryEnableIntegrationSSM
+        # AWS_LAMBDA_EXEC_WRAPPER: !Ref DtAwsLambdaExecWrapperSSM
+        # DT_TENANT: !Ref DtTenantSSM
+        # DT_CLUSTER_ID: !Ref DtClusterIdSSM
+        # DT_CONNECTION_BASE_URL: !Ref DtConnectionBaseUrlSSM
+        # DT_CONNECTION_AUTH_TOKEN: !Ref DtConnectionAuthTokenSSM
+        # DT_OPEN_TELEMETRY_ENABLE_INTEGRATION: !Ref DtOpenTelemetryEnableIntegrationSSM
   Api:
     EndpointConfiguration: REGIONAL
     TracingEnabled: true

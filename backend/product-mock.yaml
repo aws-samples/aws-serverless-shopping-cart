@@ -9,27 +9,27 @@ Parameters:
     Type: 'String'
 
   #Dynatrace SSM Parameters  
-  # DtOneAgentLambdaARNSSM:
-  #   Type: 'AWS::SSM::Parameter::Value<String>'
-  #   Default: '/dt/OneAgentLambdaARN'
-  # DtAwsLambdaExecWrapperSSM:
-  #   Type: 'AWS::SSM::Parameter::Value<String>'
-  #   Default: '/dt/LambdaExecWrapper'
-  # DtTenantSSM:
-  #   Type: 'AWS::SSM::Parameter::Value<String>'
-  #   Default: '/dt/Tenant'
-  # DtClusterIdSSM:
-  #   Type: 'AWS::SSM::Parameter::Value<String>'
-  #   Default: '/dt/dtClusterId'
-  # DtConnectionBaseUrlSSM:
-  #   Type: 'AWS::SSM::Parameter::Value<String>'
-  #   Default: '/dt/ConnectionBaseUrl'
-  # DtConnectionAuthTokenSSM:
-  #   Type: 'AWS::SSM::Parameter::Value<String>'
-  #   Default: '/dt/ConnectionAuthToken'
-  # DtOpenTelemetryEnableIntegrationSSM:
-  #   Type: 'AWS::SSM::Parameter::Value<String>'
-  #   Default: '/dt/OpenTelemetryEnableIntegration'
+  DtOneAgentLambdaARNSSM:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/dt/OneAgentLambdaARN'
+  DtAwsLambdaExecWrapperSSM:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/dt/LambdaExecWrapper'
+  DtTenantSSM:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/dt/Tenant'
+  DtClusterIdSSM:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/dt/dtClusterId'
+  DtConnectionBaseUrlSSM:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/dt/ConnectionBaseUrl'
+  DtConnectionAuthTokenSSM:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/dt/ConnectionAuthToken'
+  DtOpenTelemetryEnableIntegrationSSM:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/dt/OpenTelemetryEnableIntegration'
 
 Globals:
   Function:
@@ -37,8 +37,8 @@ Globals:
     Tracing: Active
     AutoPublishAlias: live
     Runtime: python3.8
-    # Layers:
-    #   - !Ref DtOneAgentLambdaARNSSM
+    Layers:
+      - !Ref DtOneAgentLambdaARNSSM
     MemorySize: 2048
     Environment:
       Variables:
@@ -47,12 +47,12 @@ Globals:
         POWERTOOLS_SERVICE_NAME: product-mock
         POWERTOOLS_METRICS_NAMESPACE: ecommerce-app
         # Dynatrace parameters
-        # AWS_LAMBDA_EXEC_WRAPPER: !Ref DtAwsLambdaExecWrapperSSM
-        # DT_TENANT: !Ref DtTenantSSM
-        # DT_CLUSTER_ID: !Ref DtClusterIdSSM
-        # DT_CONNECTION_BASE_URL: !Ref DtConnectionBaseUrlSSM
-        # DT_CONNECTION_AUTH_TOKEN: !Ref DtConnectionAuthTokenSSM
-        # DT_OPEN_TELEMETRY_ENABLE_INTEGRATION: !Ref DtOpenTelemetryEnableIntegrationSSM
+        AWS_LAMBDA_EXEC_WRAPPER: !Ref DtAwsLambdaExecWrapperSSM
+        DT_TENANT: !Ref DtTenantSSM
+        DT_CLUSTER_ID: !Ref DtClusterIdSSM
+        DT_CONNECTION_BASE_URL: !Ref DtConnectionBaseUrlSSM
+        DT_CONNECTION_AUTH_TOKEN: !Ref DtConnectionAuthTokenSSM
+        DT_OPEN_TELEMETRY_ENABLE_INTEGRATION: !Ref DtOpenTelemetryEnableIntegrationSSM
   Api:
     EndpointConfiguration: REGIONAL
     TracingEnabled: true

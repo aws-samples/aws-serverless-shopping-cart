@@ -81,7 +81,13 @@
 
 <!--  Dynatrace JS Code begins -->
 
-
+<script>
+  export default {
+    mounted() {
+      dtrum.identifyUser('username');
+    },
+  };
+  </script>
 
 <html lang="en">
   <head>

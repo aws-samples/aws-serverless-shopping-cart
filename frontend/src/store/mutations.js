@@ -1,4 +1,8 @@
 const setUser = (state, user) => {
+    if(user != null){
+        dtrum.identifyUser(user.username);
+        console.log(user.username);
+    }
     state.user = user
 }
 

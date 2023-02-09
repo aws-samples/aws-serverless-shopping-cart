@@ -58,7 +58,6 @@ Globals:
         ALLOWED_ORIGIN: !Ref AllowedOrigin
         POWERTOOLS_SERVICE_NAME: shopping-cart
         POWERTOOLS_METRICS_NAMESPACE: ecommerce-app
-
         # Dynatrace parameters
         AWS_LAMBDA_EXEC_WRAPPER: !Ref DtAwsLambdaExecWrapperSSM
         DT_TENANT: !Ref DtTenantSSM

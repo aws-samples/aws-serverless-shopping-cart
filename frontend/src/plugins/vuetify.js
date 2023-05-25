@@ -9,7 +9,7 @@ const opts = {
         light: {
             primary: '#DCE1E9',
             secondary: '#363732',
-            accent: '#e88b01'
+            accent: '#2196f3'
         },
       },
     },

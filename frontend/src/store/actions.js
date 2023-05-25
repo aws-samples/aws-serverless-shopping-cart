@@ -115,7 +115,7 @@ const migrateCart = ({
 const checkoutCart = ({
     commit
 }) => {
-    commit("setLoading", {value: true, message: "This is where we'd handle payment before clearing the cart..."})
+    commit("setLoading", {value: true, message: "This is where you'd process the payment before clearing the cart..."})
     cartCheckout()
         .then(() => {
             commit("setUpCart", [])

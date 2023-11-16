@@ -222,7 +222,8 @@ Resources:
             RestApiId: !Ref CartApi
             Path: /cart
             Method: post
-
+            Auth:
+              Authorizer: RequestAuthorizer
   UpdateCartFunction:
     Type: AWS::Serverless::Function
     DependsOn:

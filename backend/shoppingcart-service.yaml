@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
   shoppingcart-service
@@ -7,16 +7,16 @@ Description: >
 
 Parameters:
   UserPoolArn:
-    Type: 'AWS::SSM::Parameter::Value<String>'
-    Default: '/serverless-shopping-cart-demo/auth/user-pool-arn'
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Default: "/serverless-shopping-cart-demo/auth/user-pool-arn"
   UserPoolId:
-    Type: 'AWS::SSM::Parameter::Value<String>'
-    Default: '/serverless-shopping-cart-demo/auth/user-pool-id'
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Default: "/serverless-shopping-cart-demo/auth/user-pool-id"
   ProductServiceUrl:
-    Type: 'AWS::SSM::Parameter::Value<String>'
-    Default: '/serverless-shopping-cart-demo/products/products-api-url'
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Default: "/serverless-shopping-cart-demo/products/products-api-url"
   AllowedOrigin:
-    Type: 'String'
+    Type: "String"
 
 Globals:
   Function:
@@ -37,7 +37,7 @@ Globals:
   Api:
     EndpointConfiguration: REGIONAL
     TracingEnabled: true
-    OpenApiVersion: '2.0'
+    OpenApiVersion: "2.0"
     Cors:
       AllowMethods: "'OPTIONS,POST,GET,PUT'"
       AllowHeaders: "'Content-Type,Authorization'"
@@ -72,7 +72,12 @@ Resources:
             UserPoolArn: !Ref UserPoolArn
             Identity: # OPTIONAL
               Header: Authorization # OPTIONAL; Default: 'Authorization'
-
+          RequestAuthorizer:
+            FunctionPayloadType: REQUEST
+            FunctionArn: !GetAtt AuthorizeStep.Arn
+            Identity:
+              Headers:
+                - Authorization
   ListCartRole:
     Type: AWS::IAM::Role
     Properties:
@@ -80,7 +85,7 @@ Resources:
         Version: "2012-10-17"
         Statement:
           - Action:
-            - "sts:AssumeRole"
+              - "sts:AssumeRole"
             Effect: "Allow"
             Principal:
               Service:
@@ -93,7 +98,7 @@ Resources:
         Version: "2012-10-17"
         Statement:
           - Action:
-            - "sts:AssumeRole"
+              - "sts:AssumeRole"
             Effect: "Allow"
             Principal:
               Service:
@@ -106,14 +111,14 @@ Resources:
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
-          -
-            Effect: "Allow"
-            Action: [
-              "xray:PutTraceSegments",
-              "xray:PutTelemetryRecords",
-              "logs:CreateLogGroup",
-              "logs:CreateLogStream",
-              "logs:PutLogEvents"
+          - Effect: "Allow"
+            Action:
+              [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
               ]
             Resource: "*"
       Roles:
@@ -127,14 +132,14 @@ Resources:
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
-          -
-            Effect: "Allow"
-            Action: [
-              "dynamodb:GetItem",
-              "dynamodb:Scan",
-              "dynamodb:Query",
-              "dynamodb:BatchGetItem",
-              "dynamodb:DescribeTable"
+          - Effect: "Allow"
+            Action:
+              [
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:BatchGetItem",
+                "dynamodb:DescribeTable",
               ]
             Resource:
               - !GetAtt DynamoDBShoppingCartTable.Arn
@@ -149,15 +154,15 @@ Resources:
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
-          -
-            Effect: "Allow"
-            Action: [
-              "dynamodb:PutItem",
-              "dynamodb:UpdateItem",
-              "dynamodb:ConditionCheckItem",
-              "dynamodb:DeleteItem",
-              "dynamodb:BatchWriteItem"
-            ]
+          - Effect: "Allow"
+            Action:
+              [
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:BatchWriteItem",
+              ]
             Resource: !GetAtt DynamoDBShoppingCartTable.Arn
       Roles:
         - !Ref AddToCartRole
@@ -169,11 +174,8 @@ Resources:
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
-          -
-            Effect: "Allow"
-            Action: [
-              "sqs:SendMessage*"
-            ]
+          - Effect: "Allow"
+            Action: ["sqs:SendMessage*"]
             Resource: !GetAtt CartDeleteSQSQueue.Arn
       Roles:
         - !Ref AddToCartRole
@@ -312,7 +314,19 @@ Resources:
             RestApiId: !Ref CartApi
             Path: /cart/{product_id}/total
             Method: get
-
+  AuthorizeStep:
+    Type: AWS::Serverless::Function
+    DependsOn:
+      - LambdaLoggingPolicy
+    Properties:
+      CodeUri: shopping-cart-service/
+      Handler: authorize_step.lambda_handler
+      ReservedConcurrentExecutions: 25 # Keep the ddb spikes down in case of many deletes at once
+      Layers:
+        - !Ref UtilsLayer
+      Environment:
+        Variables:
+          USERPOOL_ID: !Ref UserPoolId
   DeleteFromCartFunction:
     Type: AWS::Serverless::Function
     DependsOn:
@@ -320,11 +334,10 @@ Resources:
     Properties:
       CodeUri: shopping-cart-service/
       Handler: delete_from_cart.lambda_handler
-      ReservedConcurrentExecutions: 25  # Keep the ddb spikes down in case of many deletes at once
+      ReservedConcurrentExecutions: 25 # Keep the ddb spikes down in case of many deletes at once
       Policies:
         - SQSPollerPolicy:
-            QueueName:
-              !GetAtt CartDeleteSQSQueue.QueueName
+            QueueName: !GetAtt CartDeleteSQSQueue.QueueName
         - Statement:
             - Effect: Allow
               Action:
@@ -385,13 +398,13 @@ Resources:
           KeyType: RANGE
       BillingMode: PAY_PER_REQUEST
       StreamSpecification:
-        StreamViewType: 'NEW_AND_OLD_IMAGES'
+        StreamViewType: "NEW_AND_OLD_IMAGES"
       TimeToLiveSpecification:
         AttributeName: expirationTime
         Enabled: True
 
   APIGWCloudWatchRole:
-    Type: 'AWS::IAM::Role'
+    Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
         Version: 2012-10-17
@@ -400,13 +413,13 @@ Resources:
             Principal:
               Service:
                 - apigateway.amazonaws.com
-            Action: 'sts:AssumeRole'
+            Action: "sts:AssumeRole"
       Path: /
       ManagedPolicyArns:
         - >-
           arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs
   ApiGWAccount:
-    Type: 'AWS::ApiGateway::Account'
+    Type: "AWS::ApiGateway::Account"
     Properties:
       CloudWatchRoleArn: !GetAtt APIGWCloudWatchRole.Arn
 
@@ -415,8 +428,7 @@ Resources:
     Properties:
       VisibilityTimeout: 20
       RedrivePolicy:
-        deadLetterTargetArn:
-          !GetAtt CartDeleteSQSDLQ.Arn
+        deadLetterTargetArn: !GetAtt CartDeleteSQSDLQ.Arn
         maxReceiveCount: 5
   CartDeleteSQSDLQ:
     Type: AWS::SQS::Queue

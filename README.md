@@ -143,8 +143,8 @@ make backend-delete
 
 ## Option 2 - Automatically deploy backend and frontend using Amplify Console
 
-
-[![One-click deployment](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/aws-samples/aws-serverless-shopping-cart)
+[![One-click deployment](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/Pigius/aws-serverless-shopping-cart
+)
 
 1) Use **1-click deployment** button above, and continue by clicking "Connect to Github"
 2) If you don't have an IAM Service Role with admin permissions, select "Create new role". Otherwise proceed to step 5) 

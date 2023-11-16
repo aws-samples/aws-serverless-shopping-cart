@@ -40,10 +40,9 @@ Globals:
     OpenApiVersion: "2.0"
     Cors:
       AllowMethods: "'OPTIONS,POST,GET,PUT'"
-      AllowHeaders: "'Content-Type,Authorization'"
+      AllowHeaders: "'Content-Type,Authorization,authorization'"
       AllowCredentials: true
       AllowOrigin: !Sub "'${AllowedOrigin}'"
-
 Resources:
   UtilsLayer:
     Type: AWS::Serverless::LayerVersion
@@ -72,12 +71,6 @@ Resources:
             UserPoolArn: !Ref UserPoolArn
             Identity: # OPTIONAL
               Header: Authorization # OPTIONAL; Default: 'Authorization'
-          RequestAuthorizer:
-            FunctionPayloadType: REQUEST
-            FunctionArn: !GetAtt AuthorizeStep.Arn
-            Identity:
-              Headers:
-                - Authorization
   ListCartRole:
     Type: AWS::IAM::Role
     Properties:
@@ -103,7 +96,6 @@ Resources:
             Principal:
               Service:
                 - "lambda.amazonaws.com"
-
   LambdaLoggingPolicy:
     Type: "AWS::IAM::Policy"
     Properties:
@@ -124,7 +116,22 @@ Resources:
       Roles:
         - !Ref ListCartRole
         - !Ref AddToCartRole
-
+  LambdaCloudWatchLogsPolicy:
+    Type: "AWS::IAM::Policy"
+    Properties:
+      PolicyName: LambdaCloudWatchLogsPolicy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Action:
+              - "logs:CreateLogGroup"
+              - "logs:CreateLogStream"
+              - "logs:PutLogEvents"
+            Resource: "*"
+      Roles:
+        - !Ref ListCartRole
+        - !Ref AddToCartRole
   DynamoDBReadPolicy:
     Type: "AWS::IAM::Policy"
     Properties:
@@ -167,6 +174,13 @@ Resources:
       Roles:
         - !Ref AddToCartRole
 
+  AuthorizeLambdaPermissionApiGateway:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt AuthorizeStepFunction.Arn
+      Principal: apigateway.amazonaws.com
+
   SQSSendMessagePolicy:
     Type: "AWS::IAM::Policy"
     Properties:
@@ -184,6 +198,7 @@ Resources:
     Type: AWS::Serverless::Function
     DependsOn:
       - LambdaLoggingPolicy
+      - LambdaCloudWatchLogsPolicy
     Properties:
       CodeUri: shopping-cart-service/
       Handler: list_cart.lambda_handler
@@ -205,6 +220,7 @@ Resources:
     Type: AWS::Serverless::Function
     DependsOn:
       - LambdaLoggingPolicy
+      - LambdaCloudWatchLogsPolicy
     Properties:
       CodeUri: shopping-cart-service/
       Handler: add_to_cart.lambda_handler
@@ -222,12 +238,11 @@ Resources:
             RestApiId: !Ref CartApi
             Path: /cart
             Method: post
-            Auth:
-              Authorizer: RequestAuthorizer
   UpdateCartFunction:
     Type: AWS::Serverless::Function
     DependsOn:
       - LambdaLoggingPolicy
+      - LambdaCloudWatchLogsPolicy
     Properties:
       CodeUri: shopping-cart-service/
       Handler: update_cart.lambda_handler
@@ -250,6 +265,7 @@ Resources:
     Type: AWS::Serverless::Function
     DependsOn:
       - LambdaLoggingPolicy
+      - LambdaCloudWatchLogsPolicy
     Properties:
       CodeUri: shopping-cart-service/
       Handler: migrate_cart.lambda_handler
@@ -276,6 +292,7 @@ Resources:
     Type: AWS::Serverless::Function
     DependsOn:
       - LambdaLoggingPolicy
+      - LambdaCloudWatchLogsPolicy
     Properties:
       CodeUri: shopping-cart-service/
       Handler: checkout_cart.lambda_handler
@@ -301,6 +318,7 @@ Resources:
     Type: AWS::Serverless::Function
     DependsOn:
       - LambdaLoggingPolicy
+      - LambdaCloudWatchLogsPolicy
     Properties:
       CodeUri: shopping-cart-service/
       Handler: get_cart_total.lambda_handler
@@ -315,13 +333,15 @@ Resources:
             RestApiId: !Ref CartApi
             Path: /cart/{product_id}/total
             Method: get
-  AuthorizeStep:
+  AuthorizeStepFunction:
     Type: AWS::Serverless::Function
     DependsOn:
       - LambdaLoggingPolicy
+      - LambdaCloudWatchLogsPolicy
     Properties:
       CodeUri: shopping-cart-service/
       Handler: authorize_step.lambda_handler
+      Role: !GetAtt ListCartRole.Arn
       ReservedConcurrentExecutions: 25 # Keep the ddb spikes down in case of many deletes at once
       Layers:
         - !Ref UtilsLayer
@@ -332,6 +352,7 @@ Resources:
     Type: AWS::Serverless::Function
     DependsOn:
       - LambdaLoggingPolicy
+      - LambdaCloudWatchLogsPolicy
     Properties:
       CodeUri: shopping-cart-service/
       Handler: delete_from_cart.lambda_handler
@@ -362,6 +383,7 @@ Resources:
     Type: AWS::Serverless::Function
     DependsOn:
       - LambdaLoggingPolicy
+      - LambdaCloudWatchLogsPolicy
     Properties:
       CodeUri: shopping-cart-service/
       Handler: db_stream_handler.lambda_handler
@@ -440,6 +462,16 @@ Resources:
       Type: String
       Name: /serverless-shopping-cart-demo/shopping-cart/cart-api-url
       Value: !Sub "https://${CartApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+
+  AddToCartLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${AddToCartFunction}"
+
+  AuthorizeStepLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${AuthorizeStepFunction}"
 
 Outputs:
   CartApi:

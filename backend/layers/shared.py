@@ -13,7 +13,7 @@ tracer = Tracer()
 
 HEADERS = {
     "Access-Control-Allow-Origin": os.environ.get("ALLOWED_ORIGIN"),
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "Content-Type,Authorization,authorization",
     "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
     "Access-Control-Allow-Credentials": True,
 }
@@ -46,6 +46,27 @@ def generate_ttl(days=1):
 
 
 @tracer.capture_method
+def get_user_claims(jwt_token):
+    """
+    Validate JWT claims & retrieve user identifier along with additional claims
+    """
+    try:
+        verified_claims = cognitojwt.decode(
+            jwt_token, os.environ["AWS_REGION"], os.environ["USERPOOL_ID"]
+        )
+    except (cognitojwt.CognitoJWTException, ValueError):
+        return {}
+    print("verified_claims", verified_claims)
+
+    claims = {
+        "username": verified_claims.get("cognito:username"),
+        "role":  verified_claims.get("custom:role")
+    }
+    print("claims", claims)
+
+    return claims
+
+@tracer.capture_method
 def get_user_sub(jwt_token):
     """
     Validate JWT claims & retrieve user identifier
@@ -58,7 +79,6 @@ def get_user_sub(jwt_token):
         verified_claims = {}
 
     return verified_claims.get("sub")
-
 
 @tracer.capture_method
 def get_cart_id(event_headers):

@@ -31,6 +31,13 @@ export default {
                 required: true,
                 displayOrder: 3,
                 type: 'string'
+              },
+              {
+                label: 'Role',
+                key: 'custom:role',
+                required: true,
+                displayOrder: 4,
+                type: 'string'
               }
             ]
           }

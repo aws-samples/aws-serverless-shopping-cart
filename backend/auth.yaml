@@ -1,10 +1,9 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
   auth-resources
 
   SAM Template for auth resources
-
 
 Globals:
   Function:
@@ -15,8 +14,18 @@ Resources:
     Type: AWS::Cognito::UserPool
     Properties:
       UserPoolName: !Sub ${AWS::StackName}-UserPool
-      AutoVerifiedAttributes: 
+      AutoVerifiedAttributes:
         - email
+      Schema:
+        - Name: email
+          AttributeDataType: String
+          Mutable: false
+          Required: true
+        - Name: role
+          AttributeDataType: String
+          Mutable: true
+          Required: false
+
   UserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:

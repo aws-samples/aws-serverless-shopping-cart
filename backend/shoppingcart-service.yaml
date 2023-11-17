@@ -472,7 +472,6 @@ Resources:
     Type: AWS::Logs::LogGroup
     Properties:
       LogGroupName: !Sub "/aws/lambda/${AuthorizeStepFunction}"
-
 Outputs:
   CartApi:
     Description: "API Gateway endpoint URL for Prod stage for Cart Service"

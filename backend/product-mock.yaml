@@ -7,7 +7,9 @@ Description: >
 Parameters:
   AllowedOrigin:
     Type: "String"
-
+  ShoppingCartUserPoolId:
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Default: "/serverless-shopping-cart-demo/auth/user-pool-id"
 Globals:
   Function:
     Timeout: 5
@@ -15,6 +17,8 @@ Globals:
     AutoPublishAlias: live
     Runtime: python3.8
     MemorySize: 256
+    Layers:
+      - !Sub arn:aws:lambda:${AWS::Region}:017000801446:layer:AWSLambdaPowertoolsPython:3
     Environment:
       Variables:
         LOG_LEVEL: "DEBUG"
@@ -28,9 +32,67 @@ Globals:
     Cors:
       AllowMethods: "'OPTIONS,POST,GET'"
       AllowHeaders: "'Content-Type,Authorization,authorization'"
+      AllowCredentials: true
       AllowOrigin: !Sub "'${AllowedOrigin}'"
 
 Resources:
+  GetProductsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: [lambda.amazonaws.com]
+            Action: ["sts:AssumeRole"]
+      Policies:
+        - PolicyName: LambdaCloudWatchLogsPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "xray:PutTraceSegments"
+                  - "xray:PutTelemetryRecords"
+                  - "xray:PutTelemetryRecords"
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Resource: "*"
+        - PolicyName: LambdaVerifiedPermissionsPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "verifiedpermissions:isAuthorized"
+                  - "verifiedpermissions:GetPolicy"
+                Resource: "*"
+
+  GetProductsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: product-mock-service/
+      Handler: get_products.lambda_handler
+      Role: !GetAtt GetProductsRole.Arn
+      Layers:
+        - !Ref UtilsLayer
+      Environment:
+        Variables:
+          LOG_LEVEL: "DEBUG"
+          ALLOWED_ORIGIN: !Ref AllowedOrigin
+          POWERTOOLS_SERVICE_NAME: product-mock
+          POWERTOOLS_METRICS_NAMESPACE: ecommerce-app
+          POLICY_STORE_ID: !Ref MyPolicyStore
+          USERPOOL_ID: !Ref ShoppingCartUserPoolId
+      Events:
+        ListCart:
+          Type: Api
+          Properties:
+            Path: /product
+            Method: get
+
   GetProductFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -43,18 +105,6 @@ Resources:
             Path: /product/{product_id}
             Method: get
 
-  GetProductsFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: product-mock-service/
-      Handler: get_products.lambda_handler
-      Events:
-        ListCart:
-          Type: Api
-          Properties:
-            Path: /product
-            Method: get
-
   GetProductApiUrl:
     Type: AWS::SSM::Parameter
     Properties:
@@ -62,7 +112,46 @@ Resources:
       Name: /serverless-shopping-cart-demo/products/products-api-url
       Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
 
+  MyPolicyStore:
+    Type: AWS::VerifiedPermissions::PolicyStore
+    Properties:
+      Schema:
+        CedarJson: '{"Bookstore":{"entityTypes":{"Book":{"shape":{"type":"Record","attributes":{}},"memberOfTypes":[]},"Role":{"shape":{"attributes":{},"type":"Record"},"memberOfTypes":[]},"User":{"shape":{"attributes":{},"type":"Record"},"memberOfTypes":["Role"]}},"actions":{"View":{"memberOf":[],"appliesTo":{"resourceTypes":["Book"],"context":{"attributes":{},"type":"Record"},"principalTypes":["User"]}}}}}'
+      ValidationSettings:
+        Mode: STRICT
+
+  RbacAdminStaticPolicy:
+    Type: AWS::VerifiedPermissions::Policy
+    Properties:
+      PolicyStoreId: !Ref MyPolicyStore
+      Definition:
+        Static:
+          Description: "Allows Admin to see all books"
+          Statement: 'permit(
+            principal in Bookstore::Role::"admin",
+            action in [Bookstore::Action::"View"],
+            resource
+            );'
+
+  UtilsLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: ./layers/
+      CompatibleRuntimes:
+        - python3.8
+    Metadata:
+      BuildMethod: python3.8
+
+  GetProductsLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${GetProductsFunction}"
 Outputs:
   ProductApi:
     Description: "API Gateway endpoint URL for Prod stage for Product Mock Service"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+  MyPolicyStoreId:
+    Description: "ID of the Policy Store"
+    Value: !Ref MyPolicyStore
+    Export:
+      Name: !Sub "${AWS::StackName}-PolicyStoreId"

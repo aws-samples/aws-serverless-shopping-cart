@@ -31,6 +31,20 @@ export default {
                 required: true,
                 displayOrder: 3,
                 type: 'string'
+              },
+              {
+                label: 'Role',
+                key: 'custom:role',
+                required: true,
+                displayOrder: 4,
+                type: 'string'
+              },
+                            {
+                label: 'Years as member',
+                key: 'custom:yearsAsMember',
+                required: true,
+                displayOrder: 5,
+                type: 'number'
               }
             ]
           }

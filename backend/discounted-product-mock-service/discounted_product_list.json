@@ -1,6 +1,6 @@
 [
     {
-        "category": "fantasy",
+        "category": "fruitsaaa",
         "createdDate": "2017-04-17T01:14:03 -02:00",
         "description": "Culpa non veniam deserunt dolor irure elit cupidatat culpa consequat nulla irure aliqua.",
         "modifiedDate": "2019-03-13T12:18:27 -01:00",
@@ -25,7 +25,7 @@
         ]
     },
     {
-        "category": "fantasy",
+        "category": "sweets",
         "createdDate": "2017-04-06T06:21:36 -02:00",
         "description": "Dolore ipsum eiusmod dolore aliquip laborum laborum aute ipsum commodo id irure duis ipsum.",
         "modifiedDate": "2019-09-21T12:08:48 -02:00",
@@ -75,7 +75,7 @@
         ]
     },
     {
-        "category": "fantasy",
+        "category": "vegetable",
         "createdDate": "2018-07-17T02:14:55 -02:00",
         "description": "Minim qui elit dolor est commodo excepteur ea voluptate eu dolor culpa magna.",
         "modifiedDate": "2019-09-05T03:36:34 -02:00",
@@ -100,7 +100,7 @@
         ]
     },
     {
-        "category": "fantasy",
+        "category": "vegetable",
         "createdDate": "2017-07-25T12:00:11 -02:00",
         "description": "Labore dolore velit mollit aute qui magna elit excepteur officia cupidatat ea ea aliqua.",
         "modifiedDate": "2019-10-04T06:32:14 -02:00",
@@ -125,7 +125,7 @@
         ]
     },
     {
-        "category": "fantasy",
+        "category": "vegetable",
         "createdDate": "2017-01-07T05:28:03 -01:00",
         "description": "Ad eiusmod cupidatat duis dolor mollit labore mollit eu.",
         "modifiedDate": "2019-04-03T10:36:25 -02:00",
@@ -150,7 +150,7 @@
         ]
     },
     {
-        "category": "fantasy",
+        "category": "meat",
         "createdDate": "2018-12-03T12:33:44 -01:00",
         "description": "Amet cupidatat anim ipsum pariatur sit eu.",
         "modifiedDate": "2019-04-17T06:31:47 -02:00",
@@ -175,7 +175,7 @@
         ]
     },
     {
-        "category": "fantasy",
+        "category": "vegetable",
         "createdDate": "2017-04-27T06:48:08 -02:00",
         "description": "Labore est aliqua laborum ea laboris voluptate cillum aute duis occaecat.",
         "modifiedDate": "2019-11-01T10:23:57 -01:00",
@@ -200,7 +200,7 @@
         ]
     },
     {
-        "category": "fantasy",
+        "category": "sweet",
         "createdDate": "2017-11-24T04:01:33 -01:00",
         "description": "Fugiat sunt in eu eu occaecat.",
         "modifiedDate": "2019-05-19T05:53:56 -02:00",
@@ -225,7 +225,7 @@
         ]
     },
     {
-        "category": "fantasy",
+        "category": "dairy",
         "createdDate": "2018-05-29T11:46:28 -02:00",
         "description": "Aliqua officia magna do ipsum laboris anim magna nulla sit labore nulla qui duis.",
         "modifiedDate": "2019-05-29T05:33:49 -02:00",
@@ -250,7 +250,7 @@
         ]
     },
     {
-        "category": "fantasy",
+        "category": "bakery",
         "createdDate": "2018-09-22T05:22:38 -02:00",
         "description": "Ullamco commodo cupidatat reprehenderit eu sunt.",
         "modifiedDate": "2019-03-11T06:10:38 -01:00",
@@ -275,7 +275,7 @@
         ]
     },
     {
-        "category": "fantasy",
+        "category": "meat",
         "createdDate": "2018-09-12T07:24:46 -02:00",
         "description": "Eu ullamco irure qui labore qui duis mollit eiusmod adipisicing fugiat adipisicing nostrud ut non.",
         "modifiedDate": "2019-10-28T01:25:50 -01:00",
@@ -300,7 +300,7 @@
         ]
     },
     {
-        "category": "fantasy",
+        "category": "bakery",
         "createdDate": "2017-06-12T09:15:36 -02:00",
         "description": "Eu culpa nulla est et anim sint amet.",
         "modifiedDate": "2019-08-22T04:22:39 -02:00",
@@ -325,7 +325,7 @@
         ]
     },
     {
-        "category": "fantasy",
+        "category": "sweet",
         "createdDate": "2018-09-06T06:03:43 -02:00",
         "description": "Mollit proident aliquip consectetur irure qui veniam laboris aliqua proident id fugiat esse nulla.",
         "modifiedDate": "2019-10-16T10:53:33 -02:00",
@@ -350,7 +350,7 @@
         ]
     },
     {
-        "category": "fantasy",
+        "category": "bakery",
         "createdDate": "2017-07-23T12:27:34 -02:00",
         "description": "Ex non proident et eiusmod et elit est exercitation anim qui ullamco elit.",
         "modifiedDate": "2019-09-04T08:25:44 -02:00",
@@ -400,7 +400,7 @@
         ]
     },
     {
-        "category": "fantasy",
+        "category": "meat",
         "createdDate": "2018-09-28T04:01:24 -02:00",
         "description": "Dolore nulla laboris incididunt laborum.",
         "modifiedDate": "2019-08-05T01:06:02 -02:00",

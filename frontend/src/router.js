@@ -2,7 +2,6 @@ import VueRouter from "vue-router";
 import Vue from "vue";
 import store from "@/store/store.js";
 import Home from "@/views/Home.vue";
-import DiscountedProducts from "@/views/DiscountedProducts.vue";
 
 import Payment from "@/views/Payment.vue";
 import Auth from "@/views/Auth.vue";

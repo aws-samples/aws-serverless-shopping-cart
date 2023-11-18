@@ -116,7 +116,7 @@ Resources:
     Type: AWS::VerifiedPermissions::PolicyStore
     Properties:
       Schema:
-        CedarJson: '{"Bookstore":{"entityTypes":{"Book":{"memberOfTypes":[],"shape":{"attributes":{"owner":{"required":true,"type":"Entity","name":"User"}},"type":"Record"}},"Role":{"memberOfTypes":[],"shape":{"attributes":{},"type":"Record"}},"User":{"memberOfTypes":["Role"],"shape":{"type":"Record","attributes":{"yearsAsMember":{"required":false,"type":"Long"}}}}},"actions":{"View":{"memberOf":[],"appliesTo":{"resourceTypes":["Book"],"context":{"attributes":{},"type":"Record"},"principalTypes":["User"]}}}}}'
+        CedarJson: '{"Bookstore":{"entityTypes":{"Book":{"memberOfTypes":[],"shape":{"attributes":{"owner":{"required":true,"type":"Entity","name":"User"}},"type":"Record"}},"Role":{"memberOfTypes":[],"shape":{"attributes":{},"type":"Record"}},"User":{"memberOfTypes":["Role"],"shape":{"type":"Record","attributes":{"yearsAsMember":{"required":false,"type":"Long"}}}}},"actions":{"View":{"memberOf":[],"appliesTo":{"resourceTypes":["Book"],"context":{"attributes":{"region":{"type": "String", "required": true}},"type":"Record"},"principalTypes":["User"]}}}}}'
       ValidationSettings:
         Mode: STRICT
 
@@ -170,6 +170,20 @@ Resources:
             resource
             )
             when { principal has yearsAsMember && principal.yearsAsMember >= 2 };'
+
+  ContextStaticPolicy:
+    Type: AWS::VerifiedPermissions::Policy
+    Properties:
+      PolicyStoreId: !Ref MyPolicyStore
+      Definition:
+        Static:
+          Description: "Denies access for users which are not located in US"
+          Statement: 'forbid(
+            principal,
+            action in [Bookstore::Action::"View"],
+            resource
+          ) 
+          when { context.region != "US" };'
 
   UtilsLayer:
     Type: AWS::Serverless::LayerVersion

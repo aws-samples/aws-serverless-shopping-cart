@@ -5,7 +5,6 @@ import {
   cartMigrate,
   putCart,
   cartCheckout,
-  getDiscountedProducts,
 } from "@/backend/api.js";
 
 import router from "@/router";
@@ -19,12 +18,7 @@ const fetchProducts = ({ commit }) => {
     commit("setUpProducts", response.products);
   });
 };
-const fetchDiscountedProducts = ({ commit }) => {
-  getDiscountedProducts().then((response) => {
-    console.log("response", response);
-    commit("setUpDiscountedProducts", response.discountedProducts);
-  });
-};
+
 const fetchCart = ({ commit }) => {
   commit("setLoading", { value: true });
   getCart().then((response) => {
@@ -128,5 +122,4 @@ export default {
   removeFromCart,
   addToCart,
   checkoutCart,
-  fetchDiscountedProducts,
 };

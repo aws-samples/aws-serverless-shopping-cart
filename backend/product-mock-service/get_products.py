@@ -16,6 +16,8 @@ with open('publisher_product_list.json', 'r') as publisher_product_list_file:
     publisher_product_list = json.load(publisher_product_list_file)
 with open('bestsellers_product_list.json', 'r') as bestsellers_product_list:
     bestsellers_product_list = json.load(bestsellers_product_list)
+with open('empty_product_list.json', 'r') as empty_product_list:
+    empty_product_list = json.load(empty_product_list)
 
 HEADERS = {
     "Access-Control-Allow-Origin": os.environ.get("ALLOWED_ORIGIN"),
@@ -79,15 +81,22 @@ def construct_authz_request(user_info):
         "entityId": "*"
     }
 
+    # For publisher, set the resource to their specific book
     if user_info["role"] == "publisher":
-        # For publisher, set the resource to their specific book
         resource["entityId"] = "DantesAdventures"
         entities.append(get_publisher_book_entity(user_info["username"]))
+
+    # For normal user with yearsAsMember attribute
     if user_info["role"] == "normal":
-        print('user_info normal', user_info)
         years_as_member = user_info.get("yearsAsMember")
         if years_as_member != "Unknown":
             entities[0]["attributes"]["yearsAsMember"] = {"long": int(years_as_member)}
+
+    # Set contextMap region based on user name
+    context_map = {"region": {"string": "US"}}
+    if user_info["username"] == "Rafael":
+        context_map = {"region": {"string": "UK"}}
+
     return {
         "policyStoreId": os.environ.get("POLICY_STORE_ID"),
         "principal": {
@@ -100,8 +109,9 @@ def construct_authz_request(user_info):
         },
         "resource": resource,
         "entities": {"entityList": entities},
-        "context": {"contextMap": {}}
+        "context": {"contextMap": context_map}
     }
+
 
 def get_publisher_book_entity(username):
     # This method returns the entity for the publisher's book
@@ -122,15 +132,21 @@ def get_publisher_book_entity(username):
     }
 
 def determine_product_list(response, user_info):
-    if 'decision' in response and response['decision'] == 'ALLOW':
-        policy_description = get_policy_description(response)
-        if policy_description == "Allows the publisher to see the books he has published":
-            return publisher_product_list
-        elif policy_description == "Allows normal user with specific yearsAsMember attribute to see bestsellers":
-            return bestsellers_product_list
-        elif user_info["role"] == "admin":
-            return admin_product_list
+    if 'decision' in response:
+        if response['decision'] == 'ALLOW':
+            policy_description = get_policy_description(response)
+            if policy_description == "Allows the publisher to see the books he has published":
+                return publisher_product_list
+            elif policy_description == "Allows normal user with specific yearsAsMember attribute to see bestsellers":
+                return bestsellers_product_list
+            elif user_info["role"] == "admin":
+                return admin_product_list
+        elif response['decision'] == 'DENY':
+            policy_description = get_policy_description(response)
+            if policy_description in ["Denies access for users which are not located in US", "Denies Admin Frank to see books"]:
+                return empty_product_list  # Return the empty product list for denied access
     return regular_product_list
+
 
 
 def get_policy_description(response):

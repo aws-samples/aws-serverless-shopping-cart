@@ -15,7 +15,6 @@ const query = {
 const requiredParams = [
   "CART_API_URL",
   "PRODUCTS_API_URL",
-  "DISCOUNTED_PRODUCTS_API_URL",
   "USER_POOL_ID",
   "USER_POOL_CLIENT_ID",
 ];

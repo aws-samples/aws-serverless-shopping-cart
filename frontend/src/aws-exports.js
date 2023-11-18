@@ -14,10 +14,6 @@ const awsmobile = {
         name: "ProductAPI",
         endpoint: process.env.VUE_APP_PRODUCTS_API_URL,
       },
-      {
-        name: "DiscountedProductAPI",
-        endpoint: process.env.VUE_APP_DISCOUNTED_PRODUCTS_API_URL,
-      },
     ],
   },
 };

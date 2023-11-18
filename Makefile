@@ -1,6 +1,6 @@
 all: backend frontend-build
 
-TEMPLATES = auth product-mock discounted-product-mock shoppingcart-service
+TEMPLATES = auth product-mock shoppingcart-service
 
 REGION := $(shell python3 -c 'import boto3; print(boto3.Session().region_name)')
 ifndef S3_BUCKET
@@ -12,13 +12,11 @@ endif
 backend: create-bucket
 	$(MAKE) -C backend TEMPLATE=auth S3_BUCKET=$(S3_BUCKET)
 	$(MAKE) -C backend TEMPLATE=product-mock S3_BUCKET=$(S3_BUCKET)
-	$(MAKE) -C backend TEMPLATE=discounted-product-mock S3_BUCKET=$(S3_BUCKET)
 	$(MAKE) -C backend TEMPLATE=shoppingcart-service S3_BUCKET=$(S3_BUCKET)
 
 backend-delete:
 	$(MAKE) -C backend delete TEMPLATE=auth
 	$(MAKE) -C backend delete TEMPLATE=product-mock
-	$(MAKE) -C backend delete TEMPLATE=discounted-product-mock
 	$(MAKE) -C backend delete TEMPLATE=shoppingcart-service
 
 backend-tests:

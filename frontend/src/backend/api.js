@@ -63,14 +63,6 @@ export async function getProducts() {
   );
 }
 
-export async function getDiscountedProducts() {
-  return getHeaders().then((headers) =>
-    API.get("DiscountedProductAPI", "/discounted_product", {
-      headers: headers,
-    })
-  );
-}
-
 export async function cartMigrate() {
   return getHeaders().then((headers) =>
     API.post("CartAPI", "/cart/migrate", {

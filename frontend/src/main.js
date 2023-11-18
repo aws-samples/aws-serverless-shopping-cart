@@ -15,7 +15,6 @@ import CartButton from "@/components/CartButton.vue";
 import CartDrawer from "@/components/CartDrawer.vue";
 import LoadingOverlay from "@/components/LoadingOverlay.vue";
 import Product from "@/components/Product.vue";
-import DiscountedProduct from "@/components/DiscountedProduct.vue";
 
 import CartQuantityEditor from "@/components/CartQuantityEditor.vue";
 
@@ -30,7 +29,6 @@ Vue.component("cart-button", CartButton);
 Vue.component("cart-drawer", CartDrawer);
 Vue.component("loading-overlay", LoadingOverlay);
 Vue.component("product", Product);
-Vue.component("discountedProduct", DiscountedProduct);
 Vue.component("cart-quantity-editor", CartQuantityEditor);
 
 new Vue({

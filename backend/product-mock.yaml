@@ -132,6 +132,18 @@ Resources:
             action in [Bookstore::Action::"View"],
             resource
             );'
+  RbacAdminForbidStaticPolicy:
+    Type: AWS::VerifiedPermissions::Policy
+    Properties:
+      PolicyStoreId: !Ref MyPolicyStore
+      Definition:
+        Static:
+          Description: "Denies Admin Frank to see books"
+          Statement: 'forbid(
+            principal == Bookstore::User::"Frank",
+            action in [Bookstore::Action::"View"],
+            resource
+            );'
 
   UtilsLayer:
     Type: AWS::Serverless::LayerVersion

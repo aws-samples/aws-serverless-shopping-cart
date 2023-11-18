@@ -17,6 +17,9 @@ with open('product_list.json', 'r') as product_list_file:
 with open('admin_product_list.json', 'r') as admin_product_list_file:
     admin_product_list = json.load(admin_product_list_file)
 
+with open('empty_product_list.json', 'r') as empty_product_list:
+    empty_product_list = json.load(empty_product_list)
+
 HEADERS = {
     "Access-Control-Allow-Origin": os.environ.get("ALLOWED_ORIGIN"),
     "Access-Control-Allow-Headers": "Content-Type,Authorization,authorization",
@@ -97,7 +100,8 @@ def lambda_handler(event, context):
         # Check if decision is 'ALLOW' and description matches specific criteria
         if response['decision'] == 'ALLOW' and policy_description == "Allows Admin to see all books":
             product_list = admin_product_list
-
+        elif response['decision'] == 'DENY' and policy_description == "Denies Admin Frank to see books":
+                    product_list = empty_product_list
     logger.debug("Fetching product list")
     return {
         "statusCode": 200,

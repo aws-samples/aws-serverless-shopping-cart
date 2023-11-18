@@ -144,6 +144,19 @@ Resources:
             action in [Bookstore::Action::"View"],
             resource
             );'
+  RbacResourceOwnerStaticPolicy:
+    Type: AWS::VerifiedPermissions::Policy
+    Properties:
+      PolicyStoreId: !Ref MyPolicyStore
+      Definition:
+        Static:
+          Description: "Allows the publisher to see the books he has published"
+          Statement: 'permit (
+            principal in Bookstore::Role::"publisher",
+            action in [Bookstore::Action::"View"],
+            resource
+            )
+            when { principal == resource.owner };'
 
   UtilsLayer:
     Type: AWS::Serverless::LayerVersion

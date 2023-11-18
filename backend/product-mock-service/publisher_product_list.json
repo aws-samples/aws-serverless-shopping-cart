@@ -1,0 +1,27 @@
+[
+    {
+        "category": "fantasy",
+        "createdDate": "2017-04-17T01:14:03 -02:00",
+        "description": "Book created by Dante",
+        "modifiedDate": "2019-03-13T12:18:27 -01:00",
+        "name": "Dante adventures",
+        "package": {
+            "height": 948,
+            "length": 455,
+            "weight": 54,
+            "width": 905
+        },
+        "pictures": [
+            "http://placehold.it/32x32"
+        ],
+        "price": 716,
+        "productId": "4c1fadaa-213a-4ea8-aa32-58c217604e3c",
+        "tags": [
+            "mollit",
+            "ad",
+            "eiusmod",
+            "irure",
+            "tempor"
+        ]
+    }
+]

@@ -116,7 +116,7 @@ Resources:
     Type: AWS::VerifiedPermissions::PolicyStore
     Properties:
       Schema:
-        CedarJson: '{"Bookstore":{"entityTypes":{"Book":{"shape":{"type":"Record","attributes":{}},"memberOfTypes":[]},"Role":{"shape":{"attributes":{},"type":"Record"},"memberOfTypes":[]},"User":{"shape":{"attributes":{},"type":"Record"},"memberOfTypes":["Role"]}},"actions":{"View":{"memberOf":[],"appliesTo":{"resourceTypes":["Book"],"context":{"attributes":{},"type":"Record"},"principalTypes":["User"]}}}}}'
+        CedarJson: '{"Bookstore":{"entityTypes":{"Book":{"memberOfTypes":[],"shape":{"attributes":{"owner":{"required":true,"type":"Entity","name":"User"}},"type":"Record"}},"Role":{"memberOfTypes":[],"shape":{"attributes":{},"type":"Record"}},"User":{"memberOfTypes":["Role"],"shape":{"type":"Record","attributes":{"yearsAsMember":{"required":false,"type":"Long"}}}}},"actions":{"View":{"memberOf":[],"appliesTo":{"resourceTypes":["Book"],"context":{"attributes":{},"type":"Record"},"principalTypes":["User"]}}}}}'
       ValidationSettings:
         Mode: STRICT
 
@@ -157,6 +157,19 @@ Resources:
             resource
             )
             when { principal == resource.owner };'
+  AbacStaticPolicy:
+    Type: AWS::VerifiedPermissions::Policy
+    Properties:
+      PolicyStoreId: !Ref MyPolicyStore
+      Definition:
+        Static:
+          Description: "Allows normal user with specific yearsAsMember attribute to see bestsellers"
+          Statement: 'permit (
+            principal in Bookstore::Role::"normal",
+            action in [Bookstore::Action::"View"],
+            resource
+            )
+            when { principal has yearsAsMember && principal.yearsAsMember >= 2 };'
 
   UtilsLayer:
     Type: AWS::Serverless::LayerVersion

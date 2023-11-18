@@ -25,6 +25,10 @@ Resources:
           AttributeDataType: String
           Mutable: true
           Required: false
+        - Name: yearsAsMember
+          AttributeDataType: Number
+          Mutable: true
+          Required: false
 
   UserPoolClient:
     Type: AWS::Cognito::UserPoolClient

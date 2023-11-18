@@ -14,6 +14,8 @@ with open('admin_product_list.json', 'r') as admin_product_list_file:
     admin_product_list = json.load(admin_product_list_file)
 with open('publisher_product_list.json', 'r') as publisher_product_list_file:
     publisher_product_list = json.load(publisher_product_list_file)
+with open('bestsellers_product_list.json', 'r') as bestsellers_product_list:
+    bestsellers_product_list = json.load(bestsellers_product_list)
 
 HEADERS = {
     "Access-Control-Allow-Origin": os.environ.get("ALLOWED_ORIGIN"),
@@ -31,7 +33,7 @@ def lambda_handler(event, context):
     print("context", context)
 
     jwt_token = event["headers"].get("Authorization")
-    user_info = {"username": "Unknown", "role": "Unknown"}
+    user_info = {"username": "Unknown", "role": "Unknown", "yearsAsMember": "Unknown"}
     if jwt_token:
         user_info = get_user_claims(jwt_token)
 
@@ -81,7 +83,11 @@ def construct_authz_request(user_info):
         # For publisher, set the resource to their specific book
         resource["entityId"] = "DantesAdventures"
         entities.append(get_publisher_book_entity(user_info["username"]))
-
+    if user_info["role"] == "normal":
+        print('user_info normal', user_info)
+        years_as_member = user_info.get("yearsAsMember")
+        if years_as_member != "Unknown":
+            entities[0]["attributes"]["yearsAsMember"] = {"long": int(years_as_member)}
     return {
         "policyStoreId": os.environ.get("POLICY_STORE_ID"),
         "principal": {
@@ -120,9 +126,12 @@ def determine_product_list(response, user_info):
         policy_description = get_policy_description(response)
         if policy_description == "Allows the publisher to see the books he has published":
             return publisher_product_list
+        elif policy_description == "Allows normal user with specific yearsAsMember attribute to see bestsellers":
+            return bestsellers_product_list
         elif user_info["role"] == "admin":
             return admin_product_list
     return regular_product_list
+
 
 def get_policy_description(response):
     # Extract the policy ID from the response

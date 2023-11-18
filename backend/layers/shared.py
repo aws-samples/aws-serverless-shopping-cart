@@ -60,7 +60,8 @@ def get_user_claims(jwt_token):
 
     claims = {
         "username": verified_claims.get("cognito:username"),
-        "role":  verified_claims.get("custom:role")
+        "role":  verified_claims.get("custom:role"),
+        "yearsAsMember": verified_claims.get("custom:yearsAsMember")
     }
     print("claims", claims)
 
